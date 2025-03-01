@@ -2,7 +2,7 @@ import { useAppContext } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 
-const Home = () => {
+const TablePage = () => {
   const { sharedProp, setSharedProp } = useAppContext();
 
   return (
@@ -12,11 +12,11 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1>Home Page</h1>
+      <h1>TablePage Page</h1>
       <p>{sharedProp}</p>
-      <Button onClick={() => setSharedProp('Updated from Home Page!')}>Update Context</Button>
+      <Button onClick={() => setSharedProp('Updated from About Page!')}>Update Context</Button>
     </motion.div>
   );
 };
 
-export default Home;
+export default TablePage;

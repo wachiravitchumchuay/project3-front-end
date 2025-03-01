@@ -1,7 +1,6 @@
 import { useAppContext } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
 
 const About = () => {
   const { sharedProp, setSharedProp } = useAppContext();
@@ -16,9 +15,6 @@ const About = () => {
       <h1>About Page</h1>
       <p>{sharedProp}</p>
       <Button onClick={() => setSharedProp('Updated from About Page!')}>Update Context</Button>
-      <Button asChild>
-        <Link to="/">Go to Home</Link>
-      </Button>
     </motion.div>
   );
 };
