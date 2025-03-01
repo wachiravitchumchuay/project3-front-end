@@ -12,9 +12,11 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1>Home Page</h1>
-      <p>{sharedProp}</p>
-      <Button onClick={() => setSharedProp('Updated from Home Page!')}>Update Context</Button>
+      <div className="bg-yellow-200">
+        <h1>Home Page</h1>
+        <p>{sharedProp}</p>
+        <Button onClick={() => setSharedProp('Updated from Home Page!')}>Update Context</Button>
+      </div>
     </motion.div>
   );
 };
