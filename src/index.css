@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Playwrite+IT+Moderna:wght@100..400&display=swap');
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --font-head: "Playwrite IT Moderna", "sans-serif";  
+  --font-body: "Exo 2", "sans-serif";
+  --color-whilte: #FFFFFF;
+  --color-black: #020202;
+  --color-green-1: #0D2818;
+  --color-green-2: #04471C;
+  --color-green-3: #058C42;
+  --color-green-4: #16DB65;
+}
+
 
 :root {
   --background: oklch(1 0 0);
@@ -75,6 +92,7 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -120,5 +138,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
   }
+  :root {
+}
+
 }

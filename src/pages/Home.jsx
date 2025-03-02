@@ -1,5 +1,5 @@
-import { useAppContext } from '../context/AppContext';
-import { motion } from 'framer-motion';
+import { useAppContext } from "../context/AppContext";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const Home = () => {
@@ -12,16 +12,10 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-yellow-200">
-        <h1>Home Page</h1>
-        <p>{sharedProp}</p>
-        <Button onClick={() => setSharedProp('Updated from Home Page!')}>Update Context</Button>
-        <div>
-          <h2>Form Values</h2>
-          <p>Username: {formValues.username}</p>
-          <p>Theme: {formValues.theme}</p>
+        <div className="max-w-1/3 pt-24">
+          <p className="font-head text-7xl">Restaurant Recommender</p>
+          <p className="font-body">E Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime architecto laboriosam maiores pariatur accusantium quos totam dolores minima, debitis error.</p>
         </div>
-      </div>
     </motion.div>
   );
 };
