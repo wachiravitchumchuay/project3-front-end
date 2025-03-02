@@ -1,7 +1,6 @@
 import { useAppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
 import {
   Table,
   TableBody,
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import FormComponent from "@/components/ui/FormComponent";
 
 const TablePage = () => {
   const { sharedProp, setSharedProp } = useAppContext();
@@ -24,9 +24,10 @@ const TablePage = () => {
     >
       <h1>TablePage Page</h1>
       <p>{sharedProp}</p>
-      <Button onClick={() => setSharedProp("Updated from About Page!")}>
+      <Button onClick={() => setSharedProp("Updated from Table Page!")}>
         Update Context
       </Button>
+      <FormComponent />
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>

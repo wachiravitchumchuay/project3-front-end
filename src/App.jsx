@@ -5,11 +5,13 @@ import Home from './pages/Home';
 import About from './pages/About';
 import CarouselPage from './pages/CarouselPage';
 import TablePage from './pages/TablePage';
+import TableHome from './pages/TableHome';
+
 import './App.css';
 
 function App() {
   const [activeTab1, setActiveTab1] = useState('/');
-  const [activeTab2, setActiveTab2] = useState('/carousel');
+  const [activeTab2, setActiveTab2] = useState('/TableHome');
 
   return (
     <AppProvider>
@@ -21,9 +23,12 @@ function App() {
         </div>
       </div>
       <div>
+        <CarouselPage />
+      </div>
+      <div>
         <TabsNavigation2 activeTab={activeTab2} setActiveTab={setActiveTab2} />
         <div>
-          {activeTab2 === '/carousel' && <CarouselPage />}
+          {activeTab2 === '/TableHome' && <TableHome />}
           {activeTab2 === '/table' && <TablePage />}
         </div>
       </div>
@@ -46,7 +51,7 @@ const TabsNavigation2 = ({ activeTab, setActiveTab }) => {
   return (
     <Tabs value={activeTab} className="w-[400px]" onValueChange={(value) => setActiveTab(value)}>
       <TabsList>
-        <TabsTrigger value="/carousel">Carousel</TabsTrigger>
+        <TabsTrigger value="/TableHome">Table Home</TabsTrigger>
         <TabsTrigger value="/table">Table</TabsTrigger>
       </TabsList>
     </Tabs>

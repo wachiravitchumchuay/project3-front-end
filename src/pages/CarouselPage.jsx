@@ -22,11 +22,11 @@ const CarouselPage = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="bg-yellow-200 p-4">
-        <h1>CarouselPage Page</h1>
+        {/* <h1>CarouselPage Page</h1>
         <p>{sharedProp}</p>
         <Button onClick={() => setSharedProp("Updated from About Page!")}>
           Update Context
-        </Button>
+        </Button> */}
         <div className="flex">
           <div className="w-1/2">
             <Carousel
