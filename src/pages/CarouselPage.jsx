@@ -2,6 +2,8 @@ import { useAppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay"
+
 
 import {
   Carousel,
@@ -21,33 +23,34 @@ const CarouselPage = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-yellow-200 p-4">
-        {/* <h1>CarouselPage Page</h1>
-        <p>{sharedProp}</p>
-        <Button onClick={() => setSharedProp("Updated from About Page!")}>
-          Update Context
-        </Button> */}
+      <div className="bg-green-1 px-14 py-2">
         <div className="flex">
-          <div className="w-1/2">
+          <div className="w-3/5">
             <Carousel
               opts={{
                 align: "start",
+                loop: true,
               }}
-              className="w-full max-w-sm"
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                }),
+              ]}
+              className="w-full"
             >
               <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (
                   <CarouselItem
                     key={index}
-                    className="md:basis-1/2 lg:basis-1/3"
+                    className=""
                   >
-                    <div className="p-1">
+                    <div className="">
                       <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <CardContent className="h-[500px]">
                           <img
                             src={`src/assets/restaurant${index + 1}.jpg`}
                             alt={`Image ${index + 1}`}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-2xl"
                           />
                         </CardContent>
                       </Card>
@@ -55,12 +58,13 @@ const CarouselPage = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious className="text-black" />
+              <CarouselNext className="text-black"/>
+                
             </Carousel>
           </div>
-          <div className="w-1/2 p-4">
-            <h2 className="text-xl font-semibold">Description </h2>
+          <div className="w-2/5 p-28">
+            <p className="font-head text-6xl">Description </p>
             <p>This is the description for image.</p>
           </div>
         </div>

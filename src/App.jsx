@@ -13,26 +13,31 @@ function App() {
 
   return (
     <AppProvider>
-      <div className="bg-green-2 text-white min-h-[60vh] ">
-        <div className="pl-24">
-          <TabsNavigation1
-            activeTab={activeTab1}
-            setActiveTab={setActiveTab1}
-          />
-          <div>
-            {activeTab1 === "/" && <Home />}
-            {activeTab1 === "/about" && <About />}
+      <div className="font-body text-white">
+        <div className="bg-green-2 text-white min-h-[60vh] ">
+          <div className="pl-24">
+            <TabsNavigation1
+              activeTab={activeTab1}
+              setActiveTab={setActiveTab1}
+            />
+            <div>
+              {activeTab1 === "/" && <Home />}
+              {activeTab1 === "/about" && <About />}
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <CarouselPage />
-      </div>
-      <div>
-        <TabsNavigation2 activeTab={activeTab2} setActiveTab={setActiveTab2} />
         <div>
-          {activeTab2 === "/TableHome" && <TableHome />}
-          {activeTab2 === "/table" && <TablePage />}
+          <CarouselPage />
+        </div>
+        <div>
+          <TabsNavigation2
+            activeTab={activeTab2}
+            setActiveTab={setActiveTab2}
+          />
+          <div>
+            {activeTab2 === "/TableHome" && <TableHome />}
+            {activeTab2 === "/table" && <TablePage />}
+          </div>
         </div>
       </div>
     </AppProvider>
@@ -46,7 +51,7 @@ const TabsNavigation1 = ({ activeTab, setActiveTab }) => {
       className="w-[1000px]"
       onValueChange={(value) => setActiveTab(value)}
     >
-      <TabsList className="bg-green-2"> 
+      <TabsList className="bg-green-2">
         <TabsTrigger
           value="/"
           className="w-64 px-4 py-2 text-lg data-[state=active]:bg-green-3 data-[state=active]:text-white data-[state=inactive]:text-gray-300"
