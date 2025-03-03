@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import FormComponent from "@/components/ui/FormComponent";
 
-const TablePage = () => {
+const TablePage = ({ setActivePage }) => {
   const { sharedProp, setSharedProp } = useAppContext();
 
   return (
@@ -23,10 +23,8 @@ const TablePage = () => {
       transition={{ duration: 0.5 }}
     >
       <h1>TablePage Page</h1>
-      <p>{sharedProp}</p>
-      <Button onClick={() => setSharedProp("Updated from Table Page!")}>
-        Update Context
-      </Button>
+      <Button onClick={() => setActivePage('TableHome')}>Go to Table Home</Button>
+
       <FormComponent />
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>

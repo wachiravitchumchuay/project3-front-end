@@ -9,7 +9,7 @@ import TableHome from "./pages/TableHome";
 
 function App() {
   const [activeTab1, setActiveTab1] = useState("/");
-  const [activeTab2, setActiveTab2] = useState("/TableHome");
+  const [activePage, setActivePage] = useState("TableHome");
 
   return (
     <AppProvider>
@@ -30,14 +30,8 @@ function App() {
           <CarouselPage />
         </div>
         <div>
-          <TabsNavigation2
-            activeTab={activeTab2}
-            setActiveTab={setActiveTab2}
-          />
-          <div>
-            {activeTab2 === "/TableHome" && <TableHome />}
-            {activeTab2 === "/table" && <TablePage />}
-          </div>
+          {activePage === "TableHome" && <TableHome setActivePage={setActivePage} />}
+          {activePage === "TablePage" && <TablePage setActivePage={setActivePage} />}
         </div>
       </div>
     </AppProvider>
@@ -69,19 +63,19 @@ const TabsNavigation1 = ({ activeTab, setActiveTab }) => {
   );
 };
 
-const TabsNavigation2 = ({ activeTab, setActiveTab }) => {
-  return (
-    <Tabs
-      value={activeTab}
-      className="w-[400px]"
-      onValueChange={(value) => setActiveTab(value)}
-    >
-      <TabsList>
-        <TabsTrigger value="/TableHome">Table Home</TabsTrigger>
-        <TabsTrigger value="/table">Table</TabsTrigger>
-      </TabsList>
-    </Tabs>
-  );
-};
+// const TabsNavigation2 = ({ activeTab, setActiveTab }) => {
+//   return (
+//     <Tabs
+//       value={activeTab}
+//       className="w-[400px]"
+//       onValueChange={(value) => setActiveTab(value)}
+//     >
+//       <TabsList>
+//         <TabsTrigger value="/TableHome">Table Home</TabsTrigger>
+//         <TabsTrigger value="/table">Table</TabsTrigger>
+//       </TabsList>
+//     </Tabs>
+//   );
+// };
 
 export default App;
