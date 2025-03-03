@@ -29,7 +29,7 @@ function App() {
         <div>
           <CarouselPage />
         </div>
-        <div>
+        <div className="bg-green-3">
           {activePage === "TableHome" && <TableHome setActivePage={setActivePage} />}
           {activePage === "TablePage" && <TablePage setActivePage={setActivePage} />}
         </div>
@@ -63,19 +63,5 @@ const TabsNavigation1 = ({ activeTab, setActiveTab }) => {
   );
 };
 
-// const TabsNavigation2 = ({ activeTab, setActiveTab }) => {
-//   return (
-//     <Tabs
-//       value={activeTab}
-//       className="w-[400px]"
-//       onValueChange={(value) => setActiveTab(value)}
-//     >
-//       <TabsList>
-//         <TabsTrigger value="/TableHome">Table Home</TabsTrigger>
-//         <TabsTrigger value="/table">Table</TabsTrigger>
-//       </TabsList>
-//     </Tabs>
-//   );
-// };
 
 export default App;

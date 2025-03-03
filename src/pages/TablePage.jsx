@@ -22,10 +22,9 @@ const TablePage = ({ setActivePage }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-
       <div className="bg-green-3">
         <Button onClick={() => setActivePage("TableHome")}>
-          Go to Table Home
+          <p> &lt; Back</p>
         </Button>
 
         <FormComponent />
