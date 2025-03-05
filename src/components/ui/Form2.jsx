@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { XMLParser } from "fast-xml-parser";
 import {
   Select,
   SelectContent,
@@ -21,18 +22,19 @@ import {
 } from "@/components/ui/form";
 
 const nutrientLevels = ["Any", "Low", "Medium", "High"];
-const runnerTypes = ["Fun Run", "Mini Marathon", "Half Marathon", "Marathon"];
-const budgetRanges = [
-  { min: null, max: null, label: "Any Budget" },
-  { min: 0, max: 300, label: "0 - 300 Baht" },
-  { min: 301, max: 600, label: "301 - 600 Baht" },
-  { min: 601, max: 900, label: "601 - 900 Baht" },
-  { min: 901, max: 1200, label: "901 - 1200 Baht" },
-  { min: 1201, max: 1500, label: "1201 - 1500 Baht" },
-  { min: 1501, max: 1800, label: "1501 - 1800 Baht" },
-  { min: 1801, max: 2100, label: "1801 - 2100 Baht" },
-  { min: 2101, max: 999999, label: "More than 2100 Baht" },
-];
+const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
+// const budgetRanges = [
+//   { value: [0, 300], label: "0 - 300 Baht" },
+//   { value: [301, 600], label: "301 - 600 Baht" },
+//   { value: [601, 900], label: "601 - 900 Baht" },
+//   { value: [901, 1200], label: "901 - 1200 Baht" },
+//   { value: [1201, 1500], label: "1201 - 1500 Baht" },
+//   { value: [1501, 1800], label: "1501 - 1800 Baht" },
+//   { value: [1801, 2100], label: "1801 - 2100 Baht" },
+//   { value: [2101, 999999], label: "More than 2100 Baht" },
+// ];
+
+const budgetRanges = ["0 - 300", "301 - 600", "601 - 900", "901 - 1200", "1201 - 1500", "1501 - 1800", "1801 - 2100", "More than 2100"];
 const restaurantTypes = [
   "Any Type",
   "Kiosk_Type",
@@ -77,32 +79,88 @@ const formSchema = z.object({
   PreRunProteinConsumtion: z.string().nonempty({ message: "Pre-run protein consumption is required." }),
   hasRestaurantTypeInterest: z.string().nonempty({ message: "Restaurant type interest is required." }),
   RunnerType: z.string().nonempty({ message: "Runner type is required." }),
-  BudgetInteresets: z.array(z.string()).min(2, { message: "At least two budget interests are required." }),
+  BudgetInteresets: z.string().nonempty({ message: "At least two budget interests are required." }),
   hasFoodTypeInterests: z.array(z.string()).nonempty({ message: "Food type interest is required." }),
 });
 
 const Form2 = () => {
-  const { setFormValues } = useAppContext();
+  const { setRestaurants } = useAppContext();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      PostRunCarbConsumtion: "Any",
-      PostRunFatConsumtion: "Any",
-      PostRunProteinConsumtion: "Any",
-      PreRunCarbConsumtion: "Any",
-      PreRunFatConsumtion: "Any",
-      PreRunProteinConsumtion: "Any",
-      hasRestaurantTypeInterest: "Any Type",
-      RunnerType: "Fun Run",
-      BudgetInteresets: "Any Budget",
+      PostRunCarbConsumtion: "Medium",
+      PostRunFatConsumtion: "Medium",
+      PostRunProteinConsumtion: "Medium",
+      PreRunCarbConsumtion: "Medium",
+      PreRunFatConsumtion: "Medium",
+      PreRunProteinConsumtion: "Medium",
+      hasRestaurantTypeInterest: "Fine_Dining_Type",
+      RunnerType: "Fun run",
+      BudgetInteresets: "301 - 600",
       hasFoodTypeInterests: [],
     },
   });
 
-  function onSubmit(values) {
-    setFormValues(values);
-    console.log(values);
-  }
+  const onSubmit = async (values) => {
+    // Build SOAP request body based on form values
+    const soapBody = `
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <sch:getRestaurantRecommendationRequest>
+               <PreRunCarbConsumtion>${values.PreRunCarbConsumtion}</PreRunCarbConsumtion>
+               <PreRunFatConsumtion>${values.PreRunFatConsumtion}</PreRunFatConsumtion>
+               <PreRunProteinConsumtion>${values.PreRunProteinConsumtion}</PreRunProteinConsumtion>
+               <PostRunCarbConsumtion>${values.PostRunCarbConsumtion}</PostRunCarbConsumtion>
+               <PostRunFatConsumtion>${values.PostRunFatConsumtion}</PostRunFatConsumtion>
+               <PostRunProteinConsumtion>${values.PostRunProteinConsumtion}</PostRunProteinConsumtion>
+               <RunnerType>${values.RunnerType}</RunnerType>
+               <BudgetInteresets>
+                  <BudgetIntereset>301</BudgetIntereset>
+                  <BudgetIntereset>600</BudgetIntereset>
+               </BudgetInteresets>
+               <hasRestaurantTypeInterest>${values.hasRestaurantTypeInterest}</hasRestaurantTypeInterest>
+               <hasFoodTypeInterests>
+                  ${values.hasFoodTypeInterests.map((food) => `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`).join('')}
+               </hasFoodTypeInterests>
+            </sch:getRestaurantRecommendationRequest>
+         </soapenv:Body>
+      </soapenv:Envelope>
+    `;
+    console.log(soapBody)
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/ws",
+          soapBody,
+          {
+            headers: {
+              "Content-Type": "text/xml",
+            },
+          }
+        );
+
+        const xmlData = response.data;
+        console.log("Raw XML Response:", xmlData);
+        const parser = new XMLParser({
+          ignoreAttributes: false,
+          ignoreDeclaration: true,
+        });
+
+        const parsedData = parser.parse(xmlData);
+
+        console.log("Parsed XML Response:", parsedData);
+
+        const restaurants =
+          parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
+            "ns3:getRestaurantRecommendationResponse"
+          ].restaurants;
+
+        console.log("Restaurants:", restaurants);
+        setRestaurants(restaurants);
+      } catch (error) {
+        console.error("Error making SOAP request:", error);
+      }
+  };
 
   return (
     <Form {...form}>
@@ -262,20 +320,19 @@ const Form2 = () => {
               <FormMessage />
             </FormItem>
           )} />
-
           {/* Budget Interests */}
           <FormField control={form.control} name="BudgetInteresets" render={({ field }) => (
             <FormItem>
-              <FormLabel>Budget Interests</FormLabel>
+              <FormLabel>Budget</FormLabel>
               <FormControl>
-                <Select multiple onValueChange={field.onChange} value={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Budget Interests" />
+                    <SelectValue placeholder="Select Runner Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {budgetRanges.map((range) => (
-                      <SelectItem key={range.label} value={range.label}>
-                        {range.label}
+                    {budgetRanges.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -284,6 +341,7 @@ const Form2 = () => {
               <FormMessage />
             </FormItem>
           )} />
+
 
         <FormField control={form.control} name="hasRestaurantTypeInterest" render={({ field }) => (
             <FormItem>

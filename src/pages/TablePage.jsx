@@ -69,7 +69,6 @@ const TablePage = ({ setActivePage }) => {
                   <TableCell>{restaurant.fat}</TableCell>
                   <TableCell>{restaurant.clean_min_budget}</TableCell>
                   <TableCell>{restaurant.clean_max_budget}</TableCell>
-                  <TableCell>{restaurant.confidence}</TableCell>
                 </TableRow>
               ))
             ) : (

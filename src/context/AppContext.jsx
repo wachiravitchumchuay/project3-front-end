@@ -4,7 +4,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [sharedProp, setSharedProp] = useState('Hello from context!');
-  const [formValues, setFormValues] = useState({ username: "", theme: "" });
+  const [formValues, setFormValues] = useState([]);
   const [service, setService] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
 
