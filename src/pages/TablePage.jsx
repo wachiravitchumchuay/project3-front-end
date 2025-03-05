@@ -34,6 +34,9 @@ const TablePage = ({ setActivePage }) => {
           <TableHeader>
             <TableRow>
               <TableHead>#</TableHead>
+              {restaurants && restaurants[0]?.confidence && (
+                <TableHead>Confidence</TableHead>
+              )}
               <TableHead>Restaurant Name</TableHead>
               <TableHead>Nationality</TableHead>
               <TableHead>District</TableHead>
@@ -51,6 +54,9 @@ const TablePage = ({ setActivePage }) => {
               restaurants.map((restaurant, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
+                  {restaurant.confidence && (
+                    <TableCell>{restaurant.confidence}</TableCell>
+                  )}
                   <TableCell className="font-medium">
                     {restaurant.restaurant_name}
                   </TableCell>
@@ -63,6 +69,7 @@ const TablePage = ({ setActivePage }) => {
                   <TableCell>{restaurant.fat}</TableCell>
                   <TableCell>{restaurant.clean_min_budget}</TableCell>
                   <TableCell>{restaurant.clean_max_budget}</TableCell>
+                  <TableCell>{restaurant.confidence}</TableCell>
                 </TableRow>
               ))
             ) : (

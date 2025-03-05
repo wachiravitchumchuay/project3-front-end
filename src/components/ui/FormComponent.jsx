@@ -9,8 +9,8 @@ const FormComponent = () => {
     <div>
       <Tabs defaultValue="1" className="w-[400px]">
         <TabsList>
-          <TabsTrigger value="1">Form1</TabsTrigger>
-          <TabsTrigger value="2">Form2</TabsTrigger>
+          <TabsTrigger value="1">All Restaurants</TabsTrigger>
+          <TabsTrigger value="2">Restaurant Recommendations</TabsTrigger>
         </TabsList>
         <TabsContent value="1">
           <Form1/>
