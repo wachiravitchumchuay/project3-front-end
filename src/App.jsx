@@ -29,7 +29,8 @@ function App() {
         <div>
           <CarouselPage />
         </div>
-        <div className="bg-green-3">
+        <div className="text-black">
+        {/* <div className="bg-green-3"> */}
           {activePage === "TableHome" && <TableHome setActivePage={setActivePage} />}
           {activePage === "TablePage" && <TablePage setActivePage={setActivePage} />}
         </div>

@@ -13,7 +13,7 @@ import {
 import FormComponent from "@/components/ui/FormComponent";
 
 const TablePage = ({ setActivePage }) => {
-  const { sharedProp, setSharedProp } = useAppContext();
+  const { restaurants } = useAppContext();
 
   return (
     <motion.div
@@ -22,29 +22,56 @@ const TablePage = ({ setActivePage }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-green-3">
+      <div className="">
         <Button onClick={() => setActivePage("TableHome")}>
-          <p> &lt; Back</p>
+          <p>&lt; Back</p>
         </Button>
 
         <FormComponent />
+
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>List of Restaurants.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>#</TableHead>
+              <TableHead>Restaurant Name</TableHead>
+              <TableHead>Nationality</TableHead>
+              <TableHead>District</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Food Type</TableHead>
+              <TableHead>Carbs</TableHead>
+              <TableHead>Protein</TableHead>
+              <TableHead>Fat</TableHead>
+              <TableHead>Min Budget</TableHead>
+              <TableHead>Max Budget</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
+            {restaurants && restaurants.length > 0 ? (
+              restaurants.map((restaurant, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index}</TableCell>
+                  <TableCell className="font-medium">
+                    {restaurant.restaurant_name}
+                  </TableCell>
+                  <TableCell>{restaurant.restaurant_nationality}</TableCell>
+                  <TableCell>{restaurant.district}</TableCell>
+                  <TableCell>{restaurant.restaurant_type}</TableCell>
+                  <TableCell>{restaurant.food_type}</TableCell>
+                  <TableCell>{restaurant.carbohydrates}</TableCell>
+                  <TableCell>{restaurant.protein}</TableCell>
+                  <TableCell>{restaurant.fat}</TableCell>
+                  <TableCell>{restaurant.clean_min_budget}</TableCell>
+                  <TableCell>{restaurant.clean_max_budget}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan="10" className="text-center">
+                  No restaurants found.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>
