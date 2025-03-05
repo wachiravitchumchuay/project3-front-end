@@ -50,7 +50,7 @@ const TablePage = ({ setActivePage }) => {
             {restaurants && restaurants.length > 0 ? (
               restaurants.map((restaurant, index) => (
                 <TableRow key={index}>
-                  <TableCell>{index}</TableCell>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell className="font-medium">
                     {restaurant.restaurant_name}
                   </TableCell>
