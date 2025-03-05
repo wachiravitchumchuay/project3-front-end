@@ -22,7 +22,7 @@ const TablePage = ({ setActivePage }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="">
+      <div className="pl-16">
         <Button onClick={() => setActivePage("TableHome")}>
           <p>&lt; Back</p>
         </Button>
