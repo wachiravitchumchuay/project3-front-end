@@ -12,9 +12,8 @@ const About = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1>About Page</h1>
-      <p>{sharedProp}</p>
-      <Button onClick={() => setSharedProp('Updated from About Page!')}>Update Context</Button>
+      <h1>project3</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore est quis pariatur a exercitationem, doloremque soluta nihil eum omnis aliquam? Nisi voluptate, tempora ullam impedit minus a facilis. Ipsam, quidem. Temporibus beatae, architecto ex optio facilis animi corporis? Earum officiis esse dolorum cupiditate nihil ea dolorem. Quia, nisi consectetur? Neque.</p>
     </motion.div>
   );
 };

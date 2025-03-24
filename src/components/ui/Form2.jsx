@@ -23,18 +23,18 @@ import {
 
 const nutrientLevels = ["Any", "Low", "Medium", "High"];
 const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
-// const budgetRanges = [
-//   { value: [0, 300], label: "0 - 300 Baht" },
-//   { value: [301, 600], label: "301 - 600 Baht" },
-//   { value: [601, 900], label: "601 - 900 Baht" },
-//   { value: [901, 1200], label: "901 - 1200 Baht" },
-//   { value: [1201, 1500], label: "1201 - 1500 Baht" },
-//   { value: [1501, 1800], label: "1501 - 1800 Baht" },
-//   { value: [1801, 2100], label: "1801 - 2100 Baht" },
-//   { value: [2101, 999999], label: "More than 2100 Baht" },
-// ];
-
-const budgetRanges = ["0 - 300", "301 - 600", "601 - 900", "901 - 1200", "1201 - 1500", "1501 - 1800", "1801 - 2100", "More than 2100"];
+const budgetRanges = [
+  { value: [0, 300], label: "0 - 300 Baht" },
+  { value: [301, 600], label: "301 - 600 Baht" },
+  { value: [601, 900], label: "601 - 900 Baht" },
+  { value: [901, 1200], label: "901 - 1200 Baht" },
+  { value: [1201, 1500], label: "1201 - 1500 Baht" },
+  { value: [1501, 1800], label: "1501 - 1800 Baht" },
+  { value: [1801, 2100], label: "1801 - 2100 Baht" },
+  { value: [2101, 999999], label: "More than 2100 Baht" },
+];
+// 
+// const budgetRanges = ["0 - 300", "301 - 600", "601 - 900", "901 - 1200", "1201 - 1500", "1501 - 1800", "1801 - 2100", "More than 2100"];
 const restaurantTypes = [
   "Any Type",
   "Kiosk_Type",
@@ -96,13 +96,24 @@ const Form2 = () => {
       PreRunProteinConsumtion: "Medium",
       hasRestaurantTypeInterest: "Fine_Dining_Type",
       RunnerType: "Fun run",
-      BudgetInteresets: "301 - 600",
+      BudgetInteresets: JSON.stringify([301, 600]),
       hasFoodTypeInterests: [],
     },
   });
 
   const onSubmit = async (values) => {
-    // Build SOAP request body based on form values
+    let budgetInterests = values.BudgetInteresets;
+    try {
+      budgetInterests = JSON.parse(budgetInterests);
+    } catch (e) {
+      budgetInterests = [];
+    }
+  
+    if (!Array.isArray(budgetInterests)) {
+      budgetInterests = [budgetInterests];
+    }
+    console.table(values);
+    console.log(typeof(values.budgetInterests));
     const soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
          <soapenv:Header/>
@@ -116,8 +127,8 @@ const Form2 = () => {
                <PostRunProteinConsumtion>${values.PostRunProteinConsumtion}</PostRunProteinConsumtion>
                <RunnerType>${values.RunnerType}</RunnerType>
                <BudgetInteresets>
-                  <BudgetIntereset>301</BudgetIntereset>
-                  <BudgetIntereset>600</BudgetIntereset>
+                  <BudgetIntereset>${budgetInterests[0]}</BudgetIntereset>
+                  <BudgetIntereset>${budgetInterests[1]}</BudgetIntereset>
                </BudgetInteresets>
                <hasRestaurantTypeInterest>${values.hasRestaurantTypeInterest}</hasRestaurantTypeInterest>
                <hasFoodTypeInterests>
@@ -155,7 +166,7 @@ const Form2 = () => {
             "ns3:getRestaurantRecommendationResponse"
           ].restaurants;
 
-        console.log("Restaurants:", restaurants);
+        console.table(restaurants)
         setRestaurants(restaurants);
       } catch (error) {
         console.error("Error making SOAP request:", error);
@@ -331,8 +342,8 @@ const Form2 = () => {
                   </SelectTrigger>
                   <SelectContent>
                     {budgetRanges.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
+                      <SelectItem key={type.label} value={JSON.stringify(type.value)}>
+                        {type.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
