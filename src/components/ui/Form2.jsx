@@ -34,7 +34,6 @@ const budgetRanges = [
   { value: [2101, 999999], label: "More than 2100 Baht" },
 ];
 // 
-// const budgetRanges = ["0 - 300", "301 - 600", "601 - 900", "901 - 1200", "1201 - 1500", "1501 - 1800", "1801 - 2100", "More than 2100"];
 const restaurantTypes = [
   "Any Type",
   "Kiosk_Type",
@@ -102,18 +101,12 @@ const Form2 = () => {
   });
 
   const onSubmit = async (values) => {
-    let budgetInterests = values.BudgetInteresets;
-    try {
-      budgetInterests = JSON.parse(budgetInterests);
-    } catch (e) {
-      budgetInterests = [];
-    }
-  
+
+    let budgetInterests = JSON.parse(values.BudgetInteresets);  
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
     console.table(values);
-    console.log(typeof(values.budgetInterests));
     const soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
          <soapenv:Header/>
@@ -160,6 +153,7 @@ const Form2 = () => {
         const parsedData = parser.parse(xmlData);
 
         console.log("Parsed XML Response:", parsedData);
+        console.table(parsedData)
 
         const restaurants =
           parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
@@ -353,8 +347,7 @@ const Form2 = () => {
             </FormItem>
           )} />
 
-
-        <FormField control={form.control} name="hasRestaurantTypeInterest" render={({ field }) => (
+          <FormField control={form.control} name="hasRestaurantTypeInterest" render={({ field }) => (
             <FormItem>
               <FormLabel>Restaurant Type Interest</FormLabel>
               <FormControl>
@@ -406,6 +399,7 @@ const Form2 = () => {
                         <input
                           type="checkbox"
                           value={type}
+                          checked={field.value.includes(type)}
                           onChange={(e) => {
                             const updatedValues = e.target.checked
                               ? [...field.value, type]
