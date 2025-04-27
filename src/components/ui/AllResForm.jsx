@@ -29,22 +29,17 @@ const AllResForm = () => {
         );
 
         const xmlData = response.data;
-        console.log("Raw XML Response:", xmlData);
         const parser = new XMLParser({
           ignoreAttributes: false,
           ignoreDeclaration: true,
         });
-
         const parsedData = parser.parse(xmlData);
-
-        console.log("Parsed XML Response:", parsedData);
-
         const restaurants =
           parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
             "ns3:getRestaurantResponse"
           ].restaurants;
-
-        console.log("Restaurants:", restaurants);
+        
+        console.table(restaurants)
         setRestaurants(restaurants);
       } catch (error) {
         console.error("Error making SOAP request:", error);

@@ -42,11 +42,11 @@ const CarouselPage = () => {
                     key={index}
                     className=""
                   >
-                    <div className="">
-                      <Card>
-                        <CardContent className="h-[500px]">
+                    <div>
+                      <Card className="py-2">
+                        <CardContent className="px-2 h-[500px]">
                           <img
-                            src={`src/assets/restaurant${index + 1}.jpg`}
+                            src={`/restaurant/carousel/restaurant${index + 1}.jpg`}
                             alt={`Image ${index + 1}`}
                             className="w-full h-full object-cover rounded-2xl"
                           />
