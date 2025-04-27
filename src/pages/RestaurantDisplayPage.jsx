@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAppContext } from "../context/AppContext";
-
+//TODO img optimize WebP format?
 const getRandomImagePath = (type) => {
   const randomIndex = Math.floor(Math.random() * 5) + 1;
   const path = `/restaurant/${type}/${type}${randomIndex}.jpg`; 
@@ -21,7 +21,7 @@ const RestaurantDisplayPage = () => {
   const { restaurants } = useAppContext();
   return (
     <div className="w-full">
-      <ScrollArea className="max-h-[700px] w-full">
+      <ScrollArea className="max-h-[700px] w-full overflow-auto">
         <div className="grid grid-cols-5 gap-4 p-4">
           {restaurants.map((restaurant, index) => {
             const imagePath = getRandomImagePath(restaurant.restaurant_type);
@@ -29,9 +29,11 @@ const RestaurantDisplayPage = () => {
             return (
               <Card key={index}>
                 <CardContent className="h-[200px] p-0">
+                  
                   <img
                     src={imagePath}
                     alt={restaurant.restaurant_name}
+                    loading="lazy"
                     className="w-full h-full object-cover rounded-md"
                   />
                 </CardContent>

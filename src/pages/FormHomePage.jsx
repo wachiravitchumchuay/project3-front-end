@@ -17,7 +17,6 @@ import { useAppContext } from "../context/AppContext";
 
 
 const FormHomePage = () => {
-  // eslint-disable-next-line
   const { restaurants, travelPlaces, runningEvents } = useAppContext();
   const [showFormHomePage, setShowFormHomePage] = useState(true);
   return (
@@ -67,10 +66,7 @@ const FormHomePage = () => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-            {/* {restaurants && restaurants.length > 0 && <RestaurantDisplayPage/>} */}
-            <RestaurantDisplayPage />
-            sdfsdf
-            //TODO: remove this when finish
+            {restaurants && restaurants.length > 0 && <RestaurantDisplayPage/>}
             {travelPlaces && travelPlaces.length > 0 && <TravelDisplayPage/>}
             {runningEvents && runningEvents.length > 0 && <RunningDisplayPage/>}
           
@@ -82,4 +78,4 @@ const FormHomePage = () => {
 };
 
 export default FormHomePage;
-//TODO add condition if there are data display it
+
