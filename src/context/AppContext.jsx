@@ -7,9 +7,18 @@ export const AppProvider = ({ children }) => {
   const [formValues, setFormValues] = useState([]);
   const [service, setService] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
+  const [runningEvents, setRunningEvents] = useState([]);
+  const [travelPlaces, setTravelPlaces] = useState([]);
 
   return (
-    <AppContext.Provider value={{ sharedProp, setSharedProp, formValues, setFormValues, service, setService, restaurants, setRestaurants }}>
+    <AppContext.Provider value={{ 
+    sharedProp, setSharedProp, 
+    formValues, setFormValues, 
+    service, setService, 
+    restaurants, setRestaurants, 
+    runningEvents, setRunningEvents,
+    travelPlaces, setTravelPlaces
+    }}>
       {children}
     </AppContext.Provider>
   );

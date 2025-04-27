@@ -1,9 +1,7 @@
-import { useAppContext } from "../context/AppContext";
+// eslint-disable-next-line
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
-const Home = () => {
-  const { sharedProp, setSharedProp, formValues } = useAppContext();
+const HomePage = () => {
 
   return (
     <motion.div
@@ -20,4 +18,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

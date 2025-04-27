@@ -1,5 +1,6 @@
-import { useAppContext } from "../context/AppContext";
+// eslint-disable-next-line
 import { motion } from "framer-motion";
+import { useAppContext } from "../context/AppContext";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import FormComponent from "@/components/ui/FormComponent";
 
-const TablePage = ({ setActivePage }) => {
+const TablePage = () => {
   const { restaurants } = useAppContext();
 
   return (
@@ -23,9 +24,6 @@ const TablePage = ({ setActivePage }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="pl-16">
-        <Button onClick={() => setActivePage("TableHome")}>
-          <p>&lt; Back</p>
-        </Button>
 
         <FormComponent />
 

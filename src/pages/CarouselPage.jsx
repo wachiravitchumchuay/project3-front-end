@@ -1,6 +1,5 @@
-import { useAppContext } from "../context/AppContext";
+// eslint-disable-next-line
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay"
 
@@ -14,7 +13,6 @@ import {
 } from "@/components/ui/carousel";
 
 const CarouselPage = () => {
-  const { sharedProp, setSharedProp } = useAppContext();
 
   return (
     <motion.div

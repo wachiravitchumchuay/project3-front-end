@@ -1,9 +1,7 @@
-import { useAppContext } from '../context/AppContext';
+// eslint-disable-next-line
 import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/button";
 
 const About = () => {
-  const { sharedProp, setSharedProp } = useAppContext();
 
   return (
     <motion.div
