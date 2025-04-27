@@ -4,7 +4,7 @@ import { useAppContext } from "@/context/AppContext";
 import { Button } from "@/components/ui/button";
 
 
-const Form3 = () => {
+const AllRecForm = () => {
   const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
 
   const handleClick = async () => {
@@ -104,4 +104,4 @@ const Form3 = () => {
     </div>
   );
 };
-export default Form3;
+export default AllRecForm;

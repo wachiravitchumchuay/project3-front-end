@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import FormComponent from "@/components/ui/FormComponent";
+
 
 const TablePage = () => {
   const { restaurants } = useAppContext();
@@ -23,10 +23,7 @@ const TablePage = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="pl-16">
-
-        <FormComponent />
-
+      <div>
         <Table>
           <TableCaption>List of Restaurants.</TableCaption>
           <TableHeader>

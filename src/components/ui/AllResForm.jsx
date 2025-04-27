@@ -3,7 +3,7 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import { useAppContext } from "@/context/AppContext";
 
-const Form1 = () => {
+const AllResForm = () => {
   const { setRestaurants } = useAppContext();
 
   useEffect(() => {
@@ -57,4 +57,4 @@ const Form1 = () => {
   return null;
 };
 
-export default Form1;
+export default AllResForm;

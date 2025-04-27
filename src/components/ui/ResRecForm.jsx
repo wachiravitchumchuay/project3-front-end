@@ -82,7 +82,7 @@ const formSchema = z.object({
   hasFoodTypeInterests: z.array(z.string()).nonempty({ message: "Food type interest is required." }),
 });
 
-const Form2 = () => {
+const ResRecForm = () => {
   const { setRestaurants } = useAppContext();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -424,4 +424,4 @@ const Form2 = () => {
   );
 };
 
-export default Form2;
+export default ResRecForm;
