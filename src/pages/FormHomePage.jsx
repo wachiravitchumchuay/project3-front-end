@@ -46,7 +46,7 @@ const FormHomePage = () => {
         //false
         <div className=" text-black pl-24 pr-24 pt-6">
             <Button onClick={() => setShowFormHomePage(true)}>Close</Button>
-            <Accordion type="single" defaultValue="item-1" collapsible>
+            <Accordion type="single" defaultValue="item-1">
               <AccordionItem value="item-1">
                 <AccordionTrigger>All Restaurants</AccordionTrigger>
                 <AccordionContent>

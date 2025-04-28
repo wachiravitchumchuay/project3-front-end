@@ -24,6 +24,7 @@ const AllResForm = () => {
           {
             headers: {
               "Content-Type": "text/xml",
+              'Access-Control-Allow-Origin' : '*',
             },
           }
         );
