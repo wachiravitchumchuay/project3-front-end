@@ -15,8 +15,8 @@ import RestaurantDisplayPage from "./RestaurantDisplayPage";
 import TravelDisplayPage from "./TravelDisplayPage";
 import RunningDisplayPage from "./RunningDisplayPage";
 import { useAppContext } from "../context/AppContext";
-
-
+//TODO add number of restaurant, running, travel summary
+//https://www.shadcnblocks.com/block/stats8/
 const FormHomePage = () => {
   const { restaurants, travelPlaces, runningEvents } = useAppContext();
   const [showFormHomePage, setShowFormHomePage] = useState(true);

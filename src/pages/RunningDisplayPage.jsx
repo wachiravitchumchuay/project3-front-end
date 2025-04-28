@@ -66,8 +66,8 @@ const RunningDisplayPage = () => {
                 <TableCell>{runningEvent.level}</TableCell>
                 <TableCell>{runningEvent.startPeriod}</TableCell>
                 <TableCell>
-                  {runningEvent.raceTypes.raceType.map((item) => (
-                    <p>{item} </p>
+                  {runningEvent.raceTypes.raceType.map((item, idx) => (
+                    <p key={idx}>{item}</p>
                   ))}
                 </TableCell>
                 <TableCell>

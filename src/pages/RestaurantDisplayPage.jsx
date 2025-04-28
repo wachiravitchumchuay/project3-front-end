@@ -1,5 +1,4 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAppContext } from "../context/AppContext";
+
 //TODO img optimize WebP format?
 const getRandomImagePath = (type) => {
   const randomIndex = Math.floor(Math.random() * 5) + 1;
@@ -18,6 +18,7 @@ const getRandomImagePath = (type) => {
 };
 
 const RestaurantDisplayPage = () => {
+
   const { restaurants } = useAppContext();
   return (
     <div className="w-full">
