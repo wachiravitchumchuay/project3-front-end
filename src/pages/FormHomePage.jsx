@@ -12,7 +12,8 @@ import AllResForm from "../components/ui/AllResForm";
 import ResRecForm from "../components/ui/ResRecForm";
 import AllRecForm from "../components/ui/AllRecForm";
 import RestaurantDisplayPage from "./RestaurantDisplayPage";
-
+import TravelDisplayPage from "./TravelDisplayPage";
+import RunningDisplayPage from "./RunningDisplayPage";
 import { useAppContext } from "../context/AppContext";
 
 
