@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/table";
 
 
+//TODO remove
+
 const TablePage = () => {
   const { restaurants } = useAppContext();
 
