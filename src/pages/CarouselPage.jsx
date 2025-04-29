@@ -46,7 +46,7 @@ const CarouselPage = () => {
                       <Card className="py-2">
                         <CardContent className="px-2 h-[500px]">
                           <img
-                            src={`/restaurant/carousel/restaurant${index + 1}.jpg`}
+                            src={`/carousel/restaurant${index + 1}_result.webp`}
                             alt={`Image ${index + 1}`}
                             className="w-full h-full object-cover rounded-2xl"
                           />

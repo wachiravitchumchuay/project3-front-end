@@ -12,11 +12,10 @@ import { useAppContext } from "../context/AppContext";
 const getRandomImagePath = (type) => {
   if (type) {
     const randomIndex = Math.floor(Math.random() * 3) + 1;
-    const path = `/travelPlaces/${type}/${type}${randomIndex}.jpg`;
-    console.log(path);
+    const path = `/travelPlaces/${type}/${type}${randomIndex}_result.webp`;
     return path;
   } else {
-    return "/travelPlaces/Kathu District/Kathu District1.jpg";
+    return "/travelPlaces/Kathu District/Kathu District1_result.webp";
   }
 };
 

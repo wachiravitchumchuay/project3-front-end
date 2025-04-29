@@ -13,7 +13,7 @@ import { useAppContext } from "../context/AppContext";
 //TODO img optimize WebP format?
 const getRandomImagePath = (type) => {
   const randomIndex = Math.floor(Math.random() * 5) + 1;
-  const path = `/restaurant/${type}/${type}${randomIndex}.jpg`;
+  const path = `/restaurant/${type}/${type}${randomIndex}_result.webp`;
   return path;
 };
 
