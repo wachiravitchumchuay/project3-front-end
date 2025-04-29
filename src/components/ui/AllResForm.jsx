@@ -3,7 +3,6 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import { useAppContext } from "@/context/AppContext";
 //TODO fix double request debouce?
-//TODO change endpoint when done
 const AllResForm = () => {
   const { setRestaurants } = useAppContext();
 
@@ -20,7 +19,7 @@ const AllResForm = () => {
     async function fetchRestaurants() {
       try {
         const response = await axios.post(
-          "http://localhost:8080/wsXX",
+          "http://localhost:8080/ws",
           soapBody,
           {
             headers: {
