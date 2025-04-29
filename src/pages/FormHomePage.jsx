@@ -16,7 +16,7 @@ import RestaurantDisplayPage from "./RestaurantDisplayPage";
 import TravelDisplayPage from "./TravelDisplayPage";
 import RunningDisplayPage from "./RunningDisplayPage";
 import { useAppContext } from "../context/AppContext";
-
+import { TrendingUp, Utensils, CookingPot } from 'lucide-react';
 const FormHomePage = () => {
   const { restaurants, travelPlaces, runningEvents } = useAppContext();
   const [showFormHomePage, setShowFormHomePage] = useState(true);
@@ -45,24 +45,30 @@ const FormHomePage = () => {
         </motion.div>
       ) : (
         //false
-        //TODO Accordion form logo
         <div className="  pl-24 pr-24 pt-6">
           <Button onClick={() => setShowFormHomePage(true)}>&#60; Back</Button>
-          <Accordion type="single" defaultValue="item-1">
+          <Accordion type="single" defaultValue="item-1" >
             <AccordionItem value="item-1">
-              <AccordionTrigger>All Restaurants</AccordionTrigger>
+              <AccordionTrigger className="text-2xl">
+                <CookingPot/>
+                All Restaurants
+                </AccordionTrigger>
               <AccordionContent>
                 <AllResForm />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>Restaurant Recommendations</AccordionTrigger>
+              <AccordionTrigger className="text-2xl">
+                <Utensils/>
+                Restaurant Recommendations</AccordionTrigger>
               <AccordionContent>
                 <ResRecForm />
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>ALL Recommendations</AccordionTrigger>
+              <AccordionTrigger className="text-2xl">
+                <TrendingUp/>
+                ALL Recommendations</AccordionTrigger>
               <AccordionContent>
                 <AllRecForm />
               </AccordionContent>

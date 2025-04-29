@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { useAppContext } from "../context/AppContext";
-//TODO display data
+//TODO display data handle confidence
 const getRandomImagePath = (type) => {
   const randomIndex = Math.floor(Math.random() * 5) + 1;
   const path = `/restaurant/${type}/${type}${randomIndex}_result.webp`;

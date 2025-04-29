@@ -21,87 +21,86 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const nutrientLevels = ["Low", "Medium", "High"];
-const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
-const budgetRanges = [
-  { value: [0, 300], label: "0 - 300 Baht" },
-  { value: [301, 600], label: "301 - 600 Baht" },
-  { value: [601, 900], label: "601 - 900 Baht" },
-  { value: [901, 1200], label: "901 - 1200 Baht" },
-  { value: [1201, 1500], label: "1201 - 1500 Baht" },
-  { value: [1501, 1800], label: "1501 - 1800 Baht" },
-  { value: [1801, 2100], label: "1801 - 2100 Baht" },
-  { value: [2101, 999999], label: "More than 2100 Baht" },
-];
-
-const restaurantTypes = [
-  { value: "Kiosk_Type", label: "Kiosk Type" },
-  { value: "Fast_Dining_Type", label: "Fast Dining Type" },
-  { value: "Casual_Dining_Type", label: "Casual Dining Type" },
-  { value: "Fine_Dining_Type", label: "Fine Dining Type" },
-];
-
-const foodTypes = [
-  "ALaCarte_Type",
-  "Bakery_Cake_Type",
-  "Breakfast_Type",
-  "BubbleMilkTea_Type",
-  "Buffet_Type",
-  "CleanFood_Salad_Type",
-  "Dessert_Type",
-  "Dimsum_Type",
-  "DrinksJuice_Type",
-  "FastFood_Type",
-  "Grill_Type",
-  "GrilledPork_Type",
-  "IceCream_Type",
-  "Noodles_Type",
-  "Omakase_Type",
-  "OneDishMeal_Type",
-  "Pizza_Type",
-  "Ramen_Type",
-  "Seafood_Type",
-  "Shabu_Sukiyaki_Type",
-  "Steak_Type",
-  "Sushi_Type",
-  "VegatarianFood_Type",
-  "Vegatarian_Jay_Type",
-  "Burger_Type",
-];
-
-const formSchema = z.object({
-  PostRunCarbConsumtion: z
-    .string()
-    .nonempty({ message: "Post-run carb consumption is required." }),
-  PostRunFatConsumtion: z
-    .string()
-    .nonempty({ message: "Post-run fat consumption is required." }),
-  PostRunProteinConsumtion: z
-    .string()
-    .nonempty({ message: "Post-run protein consumption is required." }),
-  PreRunCarbConsumtion: z
-    .string()
-    .nonempty({ message: "Pre-run carb consumption is required." }),
-  PreRunFatConsumtion: z
-    .string()
-    .nonempty({ message: "Pre-run fat consumption is required." }),
-  PreRunProteinConsumtion: z
-    .string()
-    .nonempty({ message: "Pre-run protein consumption is required." }),
-  hasRestaurantTypeInterest: z
-    .string()
-    .nonempty({ message: "Restaurant type interest is required." }),
-  RunnerType: z.string().nonempty({ message: "Runner type is required." }),
-  BudgetInteresets: z
-    .string()
-    .nonempty({ message: "At least two budget interests are required." }),
-  hasFoodTypeInterests: z
-    .array(z.string())
-    .nonempty({ message: "Food type interest is required." }),
-});
-
 const ResRecForm = () => {
   const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
+  const nutrientLevels = ["Low", "Medium", "High"];
+  const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
+  const budgetRanges = [
+    { value: [0, 300], label: "0 - 300 Baht" },
+    { value: [301, 600], label: "301 - 600 Baht" },
+    { value: [601, 900], label: "601 - 900 Baht" },
+    { value: [901, 1200], label: "901 - 1200 Baht" },
+    { value: [1201, 1500], label: "1201 - 1500 Baht" },
+    { value: [1501, 1800], label: "1501 - 1800 Baht" },
+    { value: [1801, 2100], label: "1801 - 2100 Baht" },
+    { value: [2101, 999999], label: "More than 2100 Baht" },
+  ];
+
+  const restaurantTypes = [
+    { value: "Kiosk_Type", label: "Kiosk Type" },
+    { value: "Fast_Dining_Type", label: "Fast Dining Type" },
+    { value: "Casual_Dining_Type", label: "Casual Dining Type" },
+    { value: "Fine_Dining_Type", label: "Fine Dining Type" },
+  ];
+
+  const foodTypes = [
+    "ALaCarte_Type",
+    "Bakery_Cake_Type",
+    "Breakfast_Type",
+    "BubbleMilkTea_Type",
+    "Buffet_Type",
+    "CleanFood_Salad_Type",
+    "Dessert_Type",
+    "Dimsum_Type",
+    "DrinksJuice_Type",
+    "FastFood_Type",
+    "Grill_Type",
+    "GrilledPork_Type",
+    "IceCream_Type",
+    "Noodles_Type",
+    "Omakase_Type",
+    "OneDishMeal_Type",
+    "Pizza_Type",
+    "Ramen_Type",
+    "Seafood_Type",
+    "Shabu_Sukiyaki_Type",
+    "Steak_Type",
+    "Sushi_Type",
+    "VegatarianFood_Type",
+    "Vegatarian_Jay_Type",
+    "Burger_Type",
+  ];
+
+  const formSchema = z.object({
+    PostRunCarbConsumtion: z
+      .string()
+      .nonempty({ message: "Post-run carb consumption is required." }),
+    PostRunFatConsumtion: z
+      .string()
+      .nonempty({ message: "Post-run fat consumption is required." }),
+    PostRunProteinConsumtion: z
+      .string()
+      .nonempty({ message: "Post-run protein consumption is required." }),
+    PreRunCarbConsumtion: z
+      .string()
+      .nonempty({ message: "Pre-run carb consumption is required." }),
+    PreRunFatConsumtion: z
+      .string()
+      .nonempty({ message: "Pre-run fat consumption is required." }),
+    PreRunProteinConsumtion: z
+      .string()
+      .nonempty({ message: "Pre-run protein consumption is required." }),
+    hasRestaurantTypeInterest: z
+      .string()
+      .nonempty({ message: "Restaurant type interest is required." }),
+    RunnerType: z.string().nonempty({ message: "Runner type is required." }),
+    BudgetInteresets: z
+      .string()
+      .nonempty({ message: "At least two budget interests are required." }),
+    hasFoodTypeInterests: z
+      .array(z.string())
+      .nonempty({ message: "Food type interest is required." }),
+  });
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
