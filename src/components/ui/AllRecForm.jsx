@@ -3,7 +3,8 @@ import { XMLParser } from "fast-xml-parser";
 import { useAppContext } from "@/context/AppContext";
 import { Button } from "@/components/ui/button";
 
-
+//TODO clear state
+//TODO make form
 const AllRecForm = () => {
   const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
 
@@ -99,7 +100,6 @@ const AllRecForm = () => {
   
   return (
     <div>
-      Form3
       <Button onClick={handleClick}>TESTESTSTST</Button>
     </div>
   );

@@ -21,7 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const nutrientLevels = ["Any", "Low", "Medium", "High"];
+const nutrientLevels = ["Low", "Medium", "High"];
 const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
 const budgetRanges = [
   { value: [0, 300], label: "0 - 300 Baht" },
@@ -33,14 +33,14 @@ const budgetRanges = [
   { value: [1801, 2100], label: "1801 - 2100 Baht" },
   { value: [2101, 999999], label: "More than 2100 Baht" },
 ];
-// 
+
 const restaurantTypes = [
-  "Any Type",
-  "Kiosk_Type",
-  "Fast_Dining_Type",
-  "Casual_Dining_Type",
-  "Fine_Dining_Type",
+  { value: "Kiosk_Type", label: "Kiosk Type" },
+  { value: "Fast_Dining_Type", label: "Fast Dining Type" },
+  { value: "Casual_Dining_Type", label: "Casual Dining Type" },
+  { value: "Fine_Dining_Type", label: "Fine Dining Type" },
 ];
+
 const foodTypes = [
   "ALaCarte_Type",
   "Bakery_Cake_Type",
@@ -70,20 +70,38 @@ const foodTypes = [
 ];
 
 const formSchema = z.object({
-  PostRunCarbConsumtion: z.string().nonempty({ message: "Post-run carb consumption is required." }),
-  PostRunFatConsumtion: z.string().nonempty({ message: "Post-run fat consumption is required." }),
-  PostRunProteinConsumtion: z.string().nonempty({ message: "Post-run protein consumption is required." }),
-  PreRunCarbConsumtion: z.string().nonempty({ message: "Pre-run carb consumption is required." }),
-  PreRunFatConsumtion: z.string().nonempty({ message: "Pre-run fat consumption is required." }),
-  PreRunProteinConsumtion: z.string().nonempty({ message: "Pre-run protein consumption is required." }),
-  hasRestaurantTypeInterest: z.string().nonempty({ message: "Restaurant type interest is required." }),
+  PostRunCarbConsumtion: z
+    .string()
+    .nonempty({ message: "Post-run carb consumption is required." }),
+  PostRunFatConsumtion: z
+    .string()
+    .nonempty({ message: "Post-run fat consumption is required." }),
+  PostRunProteinConsumtion: z
+    .string()
+    .nonempty({ message: "Post-run protein consumption is required." }),
+  PreRunCarbConsumtion: z
+    .string()
+    .nonempty({ message: "Pre-run carb consumption is required." }),
+  PreRunFatConsumtion: z
+    .string()
+    .nonempty({ message: "Pre-run fat consumption is required." }),
+  PreRunProteinConsumtion: z
+    .string()
+    .nonempty({ message: "Pre-run protein consumption is required." }),
+  hasRestaurantTypeInterest: z
+    .string()
+    .nonempty({ message: "Restaurant type interest is required." }),
   RunnerType: z.string().nonempty({ message: "Runner type is required." }),
-  BudgetInteresets: z.string().nonempty({ message: "At least two budget interests are required." }),
-  hasFoodTypeInterests: z.array(z.string()).nonempty({ message: "Food type interest is required." }),
+  BudgetInteresets: z
+    .string()
+    .nonempty({ message: "At least two budget interests are required." }),
+  hasFoodTypeInterests: z
+    .array(z.string())
+    .nonempty({ message: "Food type interest is required." }),
 });
 
 const ResRecForm = () => {
-  const { setRestaurants } = useAppContext();
+  const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -101,70 +119,81 @@ const ResRecForm = () => {
   });
 
   const onSubmit = async (values) => {
-
-    let budgetInterests = JSON.parse(values.BudgetInteresets);  
+    let budgetInterests = JSON.parse(values.BudgetInteresets);
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
-    console.table(values);
+    console.log(values);
     const soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
          <soapenv:Header/>
          <soapenv:Body>
             <sch:getRestaurantRecommendationRequest>
-               <PreRunCarbConsumtion>${values.PreRunCarbConsumtion}</PreRunCarbConsumtion>
-               <PreRunFatConsumtion>${values.PreRunFatConsumtion}</PreRunFatConsumtion>
-               <PreRunProteinConsumtion>${values.PreRunProteinConsumtion}</PreRunProteinConsumtion>
-               <PostRunCarbConsumtion>${values.PostRunCarbConsumtion}</PostRunCarbConsumtion>
-               <PostRunFatConsumtion>${values.PostRunFatConsumtion}</PostRunFatConsumtion>
-               <PostRunProteinConsumtion>${values.PostRunProteinConsumtion}</PostRunProteinConsumtion>
+               <PreRunCarbConsumtion>${
+                 values.PreRunCarbConsumtion
+               }</PreRunCarbConsumtion>
+               <PreRunFatConsumtion>${
+                 values.PreRunFatConsumtion
+               }</PreRunFatConsumtion>
+               <PreRunProteinConsumtion>${
+                 values.PreRunProteinConsumtion
+               }</PreRunProteinConsumtion>
+               <PostRunCarbConsumtion>${
+                 values.PostRunCarbConsumtion
+               }</PostRunCarbConsumtion>
+               <PostRunFatConsumtion>${
+                 values.PostRunFatConsumtion
+               }</PostRunFatConsumtion>
+               <PostRunProteinConsumtion>${
+                 values.PostRunProteinConsumtion
+               }</PostRunProteinConsumtion>
                <RunnerType>${values.RunnerType}</RunnerType>
                <BudgetInteresets>
                   <BudgetIntereset>${budgetInterests[0]}</BudgetIntereset>
                   <BudgetIntereset>${budgetInterests[1]}</BudgetIntereset>
                </BudgetInteresets>
-               <hasRestaurantTypeInterest>${values.hasRestaurantTypeInterest}</hasRestaurantTypeInterest>
+               <hasRestaurantTypeInterest>${
+                 values.hasRestaurantTypeInterest
+               }</hasRestaurantTypeInterest>
                <hasFoodTypeInterests>
-                  ${values.hasFoodTypeInterests.map((food) => `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`).join('')}
+                  ${values.hasFoodTypeInterests
+                    .map(
+                      (food) =>
+                        `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`
+                    )
+                    .join("")}
                </hasFoodTypeInterests>
             </sch:getRestaurantRecommendationRequest>
          </soapenv:Body>
       </soapenv:Envelope>
     `;
-    console.log(soapBody)
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/ws",
-          soapBody,
-          {
-            headers: {
-              "Content-Type": "text/xml",
-            },
-          }
-        );
+    try {
+      const response = await axios.post("http://localhost:8080/ws", soapBody, {
+        headers: {
+          "Content-Type": "text/xml",
+        },
+      });
 
-        const xmlData = response.data;
-        console.log("Raw XML Response:", xmlData);
-        const parser = new XMLParser({
-          ignoreAttributes: false,
-          ignoreDeclaration: true,
-        });
+      const xmlData = response.data;
+      const parser = new XMLParser({
+        ignoreAttributes: false,
+        ignoreDeclaration: true,
+      });
 
-        const parsedData = parser.parse(xmlData);
+      const parsedData = parser.parse(xmlData);
 
-        console.log("Parsed XML Response:", parsedData);
-        console.table(parsedData)
-
-        const restaurants =
-          parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
-            "ns3:getRestaurantRecommendationResponse"
-          ].restaurants;
-
-        console.table(restaurants)
-        setRestaurants(restaurants);
-      } catch (error) {
-        console.error("Error making SOAP request:", error);
-      }
+      const restaurants =
+        parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
+          "ns3:getRestaurantRecommendationResponse"
+        ].restaurants;
+      console.table(restaurants);
+      setRestaurants([]);
+      setRunningEvents([]);
+      setTravelPlaces([]);
+      setRestaurants(restaurants);
+    } catch (error) {
+      console.error("Error making SOAP request:", error);
+    }
   };
 
   return (
@@ -173,249 +202,293 @@ const ResRecForm = () => {
         {/* 3x3 Grid for Selections */}
         <div className="w-[600px] grid grid-cols-3 gap-4">
           {/* Post Run Carb Consumption */}
-          <FormField control={form.control} name="PostRunCarbConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post-Run Carb Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Post-Run Carb Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PostRunCarbConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Post-Run Carb Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Post-Run Carb Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Post Run Fat Consumption */}
-          <FormField control={form.control} name="PostRunFatConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post-Run Fat Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Post-Run Fat Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PostRunFatConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Post-Run Fat Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Post-Run Fat Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Post Run Protein Consumption */}
-          <FormField control={form.control} name="PostRunProteinConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Post-Run Protein Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Post-Run Protein Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PostRunProteinConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Post-Run Protein Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Post-Run Protein Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Pre Run Carb Consumption */}
-          <FormField control={form.control} name="PreRunCarbConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pre-Run Carb Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Pre-Run Carb Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PreRunCarbConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pre-Run Carb Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Pre-Run Carb Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Pre Run Fat Consumption */}
-          <FormField control={form.control} name="PreRunFatConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pre-Run Fat Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Pre-Run Fat Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PreRunFatConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pre-Run Fat Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Pre-Run Fat Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Pre Run Protein Consumption */}
-          <FormField control={form.control} name="PreRunProteinConsumtion" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pre-Run Protein Consumption</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Pre-Run Protein Consumption" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {nutrientLevels.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="PreRunProteinConsumtion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pre-Run Protein Consumption</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Pre-Run Protein Consumption" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {nutrientLevels.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/* Runner Type */}
-          <FormField control={form.control} name="RunnerType" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Runner Type</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Runner Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {runnerTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="RunnerType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Runner Type</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Runner Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {runnerTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {/* Budget Interests */}
-          <FormField control={form.control} name="BudgetInteresets" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Budget</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Runner Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {budgetRanges.map((type) => (
-                      <SelectItem key={type.label} value={JSON.stringify(type.value)}>
-                        {type.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+          <FormField
+            control={form.control}
+            name="BudgetInteresets"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Budget</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Runner Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {budgetRanges.map((type) => (
+                        <SelectItem
+                          key={type.label}
+                          value={JSON.stringify(type.value)}
+                        >
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <FormField control={form.control} name="hasRestaurantTypeInterest" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Restaurant Type Interest</FormLabel>
-              <FormControl>
-                <Select multiple onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select Restaurant Type Interest" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {restaurantTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
-
-
-
+          <FormField
+            control={form.control}
+            name="hasRestaurantTypeInterest"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Restaurant Type Interest</FormLabel>
+                <FormControl>
+                  <Select
+                    multiple
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Restaurant Type Interest" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {restaurantTypes.map((type) => (
+                        <SelectItem key={type.value} value={type.value}>
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm" />
+              </FormItem>
+            )}
+          />
         </div>
 
         {/* Food Type Interests */}
         <div className="w-[900px]">
-          <FormField control={form.control} name="hasFoodTypeInterests" render={({ field }) => (
-            <FormItem>
-              <FormLabel>Food Type Interests</FormLabel>
-              <FormControl>
-                <div className="space-y-2">
-                  <div>
-                    <input
-                      type="checkbox"
-                      value="Select All"
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          field.onChange(foodTypes);
-                        } else {
-                          field.onChange([]);
-                        }
-                      }}
-                    />
-                    <label>Select All</label>
+          <FormField
+            control={form.control}
+            name="hasFoodTypeInterests"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Food Type Interests</FormLabel>
+                <FormControl>
+                  <div className="space-y-2">
+                    <div>
+                      <input
+                        type="checkbox"
+                        value="Select All"
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            field.onChange(foodTypes);
+                          } else {
+                            field.onChange([]);
+                          }
+                        }}
+                      />
+                      <label>Select All</label>
+                    </div>
+                    <div className="grid grid-cols-5 gap-2">
+                      {foodTypes.map((type) => (
+                        <div key={type} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            value={type}
+                            checked={field.value.includes(type)}
+                            onChange={(e) => {
+                              const updatedValues = e.target.checked
+                                ? [...field.value, type]
+                                : field.value.filter((value) => value !== type);
+                              field.onChange(updatedValues);
+                            }}
+                          />
+                          <label>{type}</label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-5 gap-2">
-                    {foodTypes.map((type) => (
-                      <div key={type} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          value={type}
-                          checked={field.value.includes(type)}
-                          onChange={(e) => {
-                            const updatedValues = e.target.checked
-                              ? [...field.value, type]
-                              : field.value.filter((value) => value !== type);
-                            field.onChange(updatedValues);
-                          }}
-                        />
-                        <label>{type}</label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )} />
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm" />
+              </FormItem>
+            )}
+          />
         </div>
 
         <Button type="submit">Submit</Button>

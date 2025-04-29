@@ -8,7 +8,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { useAppContext } from "../context/AppContext";
-
+//TODO display data
 const getRandomImagePath = (type) => {
   if (type) {
     const randomIndex = Math.floor(Math.random() * 3) + 1;

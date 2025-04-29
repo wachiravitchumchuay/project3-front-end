@@ -21,7 +21,7 @@ const CarouselPage = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-green-1 px-14 py-2">
+      <div className="text-white bg-green-1 px-14 py-2">
         <div className="flex">
           <div className="w-3/5">
             <Carousel

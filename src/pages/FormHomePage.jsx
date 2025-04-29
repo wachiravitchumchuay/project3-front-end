@@ -30,7 +30,7 @@ const FormHomePage = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-green-3 flex flex-col justify-center items-center">
+          <div className="text-white bg-green-3 flex flex-col justify-center items-center">
             <div className="pt-18 flex flex-col justify-center items-center text-center">
               <p className="font-head text-6xl">Recommender</p>
               <p>
@@ -45,8 +45,9 @@ const FormHomePage = () => {
         </motion.div>
       ) : (
         //false
-        <div className=" text-black pl-24 pr-24 pt-6">
-          <Button onClick={() => setShowFormHomePage(true)}>Close</Button>
+        //TODO Accordion form logo
+        <div className="  pl-24 pr-24 pt-6">
+          <Button onClick={() => setShowFormHomePage(true)}>&#60; Back</Button>
           <Accordion type="single" defaultValue="item-1">
             <AccordionItem value="item-1">
               <AccordionTrigger>All Restaurants</AccordionTrigger>

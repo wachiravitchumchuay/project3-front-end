@@ -12,8 +12,8 @@ function App() {
 
   return (
     <AppProvider>
-      <div className="font-body text-white">
-        <div className="bg-green-2 text-white min-h-[60vh] ">
+      <div className="font-body ">
+        <div className="bg-green-2 text-white min-h-[50vh] ">
           <div className="pl-24">
             <TabsNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
             <div>

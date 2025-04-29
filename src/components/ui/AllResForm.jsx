@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import { useAppContext } from "@/context/AppContext";
-//TODO fix double request debouce?
+
 const AllResForm = () => {
-  const { setRestaurants } = useAppContext();
+  const { setRestaurants,setRunningEvents,setTravelPlaces } = useAppContext();
 
   useEffect(() => {
     const soapBody = `
@@ -41,6 +41,9 @@ const AllResForm = () => {
           ].restaurants;
         
         console.table(restaurants)
+        setRestaurants([])
+        setRunningEvents([])
+        setTravelPlaces([])
         setRestaurants(restaurants);
       } catch (error) {
         console.error("Error making SOAP request:", error);
@@ -48,7 +51,8 @@ const AllResForm = () => {
     }
 
     fetchRestaurants();
-  }, [setRestaurants]);
+    // eslint-disable-next-line
+  }, []);
 
   return null;
 };

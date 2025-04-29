@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/drawer";
 
 import { MountainSnow, Flame } from "lucide-react";
-
+//TODO table width
 const RunningDisplayPage = () => {
   const { runningEvents } = useAppContext();
   return (
