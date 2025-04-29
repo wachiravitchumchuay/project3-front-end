@@ -41,7 +41,7 @@ const TravelDisplayPage = () => {
   const { travelPlaces } = useAppContext();
   return (
     <section className="py-32">
-      <div className="container">
+      <div className="">
         <div className="mb-8 flex flex-col justify-between md:mb-14 md:flex-row md:items-end lg:mb-16">
           <div>
             <h2 className="font-head text-4xl">Travel Places</h2>
@@ -84,7 +84,8 @@ const TravelDisplayPage = () => {
           }}
           className="relative left-[-1rem]"
         >
-          <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))] 2xl:ml-[max(8rem,calc(50vw-700px+1rem))]">
+          {/* <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))] 2xl:ml-[max(8rem,calc(50vw-700px+1rem))]"> */}
+          <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))]">
             {travelPlaces.map((item, index) => {
               const imagePath = getRandomImagePath(item.district);
               return (
