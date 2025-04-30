@@ -71,17 +71,46 @@ const AllRecForm = () => {
     "Burger_Type",
   ];
   //TODO add form data
-  const travelPlaceTypes = [];
-  const districts = [];
-  const raceTypes = [];
-  const typeofEvents = [];
-  const prices = [];
-  const organizations = [];
-  const activityAreas = [];
-  const standards = [];
-  const levels = [];
-  const startPeriods = [];
-  const rewards = [];
+  const travelPlaceTypes = [
+    "Beach",
+    "Natural",
+    "TownAndCity",
+    "Cultural",
+    "ShoppingAndDining",
+    "EntertainmentAndNightLife",
+    "HealthAndWellness",
+  ];
+  const districts = [
+    "Thalang District",
+    "Kathu District",
+    "Mueang Phuket District",
+  ];
+  //TODO check space lable
+  const raceTypes = ["FunRun", "Mini Marathon", "Half Marathon", "Marathon"];
+  //TODO lable
+  const typeofEvents = ["CharityEvent", "CompetitiveEvent"];
+  const prices = ["Economy", "Average", "Premium"];
+  //TODO value no space lable
+  const organizations = [
+    "Siriroj Hospital",
+    "Red Cross Phuket",
+    "Phuket Night Run",
+    "Rawai Municipality",
+    "Marriott International Hotel",
+    "MoveAsia",
+    "Bangkok Airways",
+    "Rotary Phuket",
+    "Run For Life",
+    "Laguna Phuket",
+  ];
+  const activityAreas = ["Natural", "City"];
+  //TODO lable
+  const standards = ["StandardEvent", "No"];
+  //TODO lable
+  const levels = ["InternationalEvent", "LocalEvent"];
+  const startPeriods = ["Morning", "Evening", "Night"];
+  //TODO lable
+  const rewards = ["Medal", "Prize", "Certificate", "FinisherShirt"];
 
   const formSchema = z.object({
     PostRunCarbConsumtion: z.string(),
@@ -108,7 +137,7 @@ const AllRecForm = () => {
     startPeriod: z.string(),
     reward: z.string(),
   });
-
+//TODO update form
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -148,17 +177,17 @@ const AllRecForm = () => {
         "Vegatarian_Jay_Type",
         "Burger_Type",
       ],
-      travelPlaceType: "",
-      district: "",
-      raceType: "",
-      typeofEvent: "",
-      price: "",
-      organization: "",
-      activityArea: "",
-      standard: "",
-      level: "",
-      startPeriod: "",
-      reward: "",
+      travelPlaceType: "Natural",
+      district: "Thalang District",
+      raceType: "FunRun",
+      typeofEvent: "CharityEvent",
+      price: "Economy",
+      organization: "Siriroj Hospital",
+      activityArea: "Natural",
+      standard: "StandardEvent",
+      level: "InternationalEvent",
+      startPeriod: "Morning",
+      reward: "Medal",
     },
   });
 
@@ -222,6 +251,7 @@ const AllRecForm = () => {
       </soapenv:Body>
   </soapenv:Envelope>
       `;
+      console.log(soapBody);
     try {
       const response = await axios.post("http://localhost:8080/ws", soapBody, {
         headers: {
@@ -590,7 +620,7 @@ const AllRecForm = () => {
             <div>
               <Separator orientation="vertical" />
             </div>
-            <div className="w-[600px] grid grid-cols-3 gap-4 h-1/2 ml-2" >
+            <div className="w-[600px] grid grid-cols-3 gap-4 h-1/2 ml-2">
               <FormField
                 control={form.control}
                 name="travelPlaceType"
