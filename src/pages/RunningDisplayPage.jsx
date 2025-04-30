@@ -57,18 +57,43 @@ const RunningDisplayPage = () => {
                 {runningEvent.confidence && (
                   <TableCell>{runningEvent.confidence}</TableCell>
                 )}
-                  <TableCell>{runningEvent.runningEventName}</TableCell>
+                <TableCell>{runningEvent.runningEventName}</TableCell>
                 <TableCell>{runningEvent.district}</TableCell>
                 <TableCell>{runningEvent.typeofEvent}</TableCell>
                 <TableCell>{runningEvent.organization}</TableCell>
-                <TableCell>{runningEvent.activityArea}</TableCell>
+                <TableCell>
+                  {typeof runningEvent.activityAreas.activityArea ===
+                  "string" ? (
+                    <p>{runningEvent.activityAreas.activityArea}</p>
+                  ) : (
+                    Array.isArray(runningEvent.activityAreas.activityArea) &&
+                    runningEvent.activityAreas.activityArea.map((item, idx) => (
+                      <p key={idx}>{item}</p>
+                    ))
+                  )}
+                </TableCell>
                 <TableCell>{runningEvent.standard}</TableCell>
                 <TableCell>{runningEvent.level}</TableCell>
-                <TableCell>{runningEvent.startPeriod}</TableCell>
+
                 <TableCell>
-                  {runningEvent.raceTypes.raceType.map((item, idx) => (
-                    <p key={idx}>{item}</p>
-                  ))}
+                  {typeof runningEvent.startPeriods.startPeriod === "string" ? (
+                    <p>{runningEvent.startPeriods.startPeriod}</p>
+                  ) : (
+                    Array.isArray(runningEvent.startPeriods.startPeriod) &&
+                    runningEvent.startPeriods.startPeriod.map((item, idx) => (
+                      <p key={idx}>{item}</p>
+                    ))
+                  )}
+                </TableCell>
+                <TableCell>
+                  {typeof runningEvent.raceTypes.raceType === "string" ? (
+                    <p>{runningEvent.raceTypes.raceType}</p>
+                  ) : (
+                    Array.isArray(runningEvent.raceTypes.raceType) &&
+                    runningEvent.raceTypes.raceType.map((item, idx) => (
+                      <p key={idx}>{item}</p>
+                    ))
+                  )}
                 </TableCell>
                 <TableCell>
                   {typeof runningEvent.prices.price === "string" ? (
