@@ -70,7 +70,7 @@ const AllRecForm = () => {
     "Vegatarian_Jay_Type",
     "Burger_Type",
   ];
-  //TODO add form data
+
   const travelPlaceTypes = [
     "Beach",
     "Natural",
@@ -85,32 +85,48 @@ const AllRecForm = () => {
     "Kathu District",
     "Mueang Phuket District",
   ];
-  //TODO check space lable
-  const raceTypes = ["FunRun", "Mini Marathon", "Half Marathon", "Marathon"];
-  //TODO lable
-  const typeofEvents = ["CharityEvent", "CompetitiveEvent"];
+  const raceTypes = [
+    { value: "FunRun", label: "Fun Run" },
+    { value: "MiniMarathon", label: "Mini Marathon" },
+    { value: "HalfMarathon", label: "Half Marathon" },
+    { value: "Marathon", label: "Marathon" },
+  ];;
+  const typeofEvents = [
+    { value: "CharityEvent", label: "Charity Event" },
+    { value: "CompetitiveEvent", label: "Competitive Event" },
+  ];
   const prices = ["Economy", "Average", "Premium"];
-  //TODO value no space lable
+  
   const organizations = [
-    "Siriroj Hospital",
-    "Red Cross Phuket",
-    "Phuket Night Run",
-    "Rawai Municipality",
-    "Marriott International Hotel",
-    "MoveAsia",
-    "Bangkok Airways",
-    "Rotary Phuket",
-    "Run For Life",
-    "Laguna Phuket",
+    { value: "SirirojHospital", label: "Siriroj Hospital" },
+    { value: "RedCrossPhuket", label: "Red Cross Phuket" },
+    { value: "PhuketNightRun", label: "Phuket Night Run" },
+    { value: "RawaiMunicipality", label: "Rawai Municipality" },
+    { value: "MarriottInternationalHotel", label: "Marriott International Hotel" },
+    { value: "MoveAsia", label: "MoveAsia" },
+    { value: "BangkokAirways", label: "Bangkok Airways" },
+    { value: "RotaryPhuket", label: "Rotary Phuket" },
+    { value: "RunForLife", label: "Run For Life" },
+    { value: "LagunaPhuket", label: "Laguna Phuket" },
   ];
   const activityAreas = ["Natural", "City"];
-  //TODO lable
-  const standards = ["StandardEvent", "No"];
-  //TODO lable
-  const levels = ["InternationalEvent", "LocalEvent"];
+
+const standards = [
+  { value: "StandardEvent", label: "Standard Event" },
+  { value: "No", label: "Not Standard Event" },
+];
+
+const levels = [
+  { value: "InternationalEvent", label: "International Event" },
+  { value: "LocalEvent", label: "Local Event" },
+];
   const startPeriods = ["Morning", "Evening", "Night"];
-  //TODO lable
-  const rewards = ["Medal", "Prize", "Certificate", "FinisherShirt"];
+  const rewards = [
+    { value: "Medal", label: "Medal" },
+    { value: "Prize", label: "Prize" },
+    { value: "Certificate", label: "Certificate" },
+    { value: "FinisherShirt", label: "Finisher Shirt" },
+  ];
 
   const formSchema = z.object({
     PostRunCarbConsumtion: z.string(),
@@ -137,7 +153,6 @@ const AllRecForm = () => {
     startPeriod: z.string(),
     reward: z.string(),
   });
-//TODO update form
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -182,7 +197,7 @@ const AllRecForm = () => {
       raceType: "FunRun",
       typeofEvent: "CharityEvent",
       price: "Economy",
-      organization: "Siriroj Hospital",
+      organization: "SirirojHospital",
       activityArea: "Natural",
       standard: "StandardEvent",
       level: "InternationalEvent",
@@ -693,8 +708,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {raceTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -721,8 +736,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {typeofEvents.map((event) => (
-                            <SelectItem key={event} value={event}>
-                              {event}
+                            <SelectItem key={event.value} value={event.value}>
+                              {event.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -777,8 +792,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {organizations.map((org) => (
-                            <SelectItem key={org} value={org}>
-                              {org}
+                            <SelectItem key={org.value} value={org.value}>
+                              {org.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -833,8 +848,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {standards.map((standard) => (
-                            <SelectItem key={standard} value={standard}>
-                              {standard}
+                            <SelectItem key={standard.value} value={standard.value}>
+                              {standard.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -861,8 +876,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {levels.map((level) => (
-                            <SelectItem key={level} value={level}>
-                              {level}
+                            <SelectItem key={level.value} value={level.value}>
+                              {level.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -917,8 +932,8 @@ const AllRecForm = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {rewards.map((reward) => (
-                            <SelectItem key={reward} value={reward}>
-                              {reward}
+                            <SelectItem key={reward.value} value={reward.value}>
+                              {reward.label}
                             </SelectItem>
                           ))}
                         </SelectContent>
