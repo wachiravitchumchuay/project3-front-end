@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/drawer";
 
 import { MountainSnow, Flame } from "lucide-react";
-//TODO table width
+
 const RunningDisplayPage = () => {
   const { runningEvents } = useAppContext();
   return (
     <div>
       <p className="font-head text-4xl"> Running Event </p>
 
-      <Table>
+      <Table className="w-1/2">
         <TableHeader>
           <TableRow>
             <TableHead>#</TableHead>
@@ -57,7 +57,7 @@ const RunningDisplayPage = () => {
                 {runningEvent.confidence && (
                   <TableCell>{runningEvent.confidence}</TableCell>
                 )}
-                <TableCell>{runningEvent.runningEventName}</TableCell>
+                  <TableCell>{runningEvent.runningEventName}</TableCell>
                 <TableCell>{runningEvent.district}</TableCell>
                 <TableCell>{runningEvent.typeofEvent}</TableCell>
                 <TableCell>{runningEvent.organization}</TableCell>
@@ -128,7 +128,6 @@ const RunningDisplayPage = () => {
                                 {place.travelPlaceType?.trim() && (
                                   <p>• {place.travelPlaceType}</p>
                                 )}
-                                
                               </div>
 
                               <div className="mt-2 text-xs text-muted-foreground">
