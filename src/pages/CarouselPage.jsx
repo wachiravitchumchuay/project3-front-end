@@ -62,8 +62,8 @@ const CarouselPage = () => {
             </Carousel>
           </div>
           <div className="w-2/5 p-28">
-            <p className="font-head text-6xl">Description </p>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas earum velit modi placeat aliquam fugit perspiciatis error accusantium quo cupiditate.</p>
+            <div className="font-head text-6xl">Description </div>
+            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas earum velit modi placeat aliquam fugit perspiciatis error accusantium quo cupiditate.</div>
           </div>
         </div>
       </div>

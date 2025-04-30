@@ -32,11 +32,11 @@ const FormHomePage = () => {
         >
           <div className="text-white bg-green-3 flex flex-col justify-center items-center">
             <div className="pt-18 flex flex-col justify-center items-center text-center">
-              <p className="font-head text-6xl">Recommender</p>
-              <p>
+              <div className="font-head text-6xl">Recommender</div>
+              <div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Praesentium, ullam!
-              </p>
+              </div>
             </div>
             <div className="p-6">
               <Button onClick={() => setShowFormHomePage(false)}>Start</Button>
@@ -88,21 +88,21 @@ const FormHomePage = () => {
                     <div className="flex gap-5 text-3xl">
                       {(restaurants && restaurants.length > 0) && (
                         <div className="flex ">
-                          <p>Restaurant: {restaurants.length}</p>
+                          <div>Restaurant: {restaurants.length}</div>
                           
                         </div>
                       )}
                       {(travelPlaces && travelPlaces.length > 0) && (
                         <div className="flex">
                           <Separator orientation="vertical" />
-                          <p>Travel Place: {travelPlaces.length}</p>
+                          <div>Travel Place: {travelPlaces.length}</div>
                           
                         </div>
                       )}
                       {(runningEvents && runningEvents.length > 0) && (
                         <div className="flex">
                           <Separator orientation="vertical" />
-                          <p>Running Event: {runningEvents.length}</p>
+                          <div>Running Event: {runningEvents.length}</div>
                           
                         </div>
                       )}

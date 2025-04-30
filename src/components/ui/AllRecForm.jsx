@@ -214,7 +214,6 @@ const AllRecForm = () => {
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
-    console.log(values);
     const soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
       <soapenv:Header />
@@ -269,7 +268,6 @@ const AllRecForm = () => {
       </soapenv:Body>
   </soapenv:Envelope>
       `;
-    console.log(soapBody);
     try {
       const response = await axios.post("http://localhost:8080/ws", soapBody, {
         headers: {

@@ -51,8 +51,8 @@ const RunningDisplayPage = () => {
         </TableHeader>
         <TableBody>
           {runningEvents.map((runningEvent, index) => (
-            <Drawer direction="right">
-              <TableRow key={index}>
+            <Drawer direction="right" key={index}>
+              <TableRow >
                 <TableCell>{index + 1}</TableCell>
                 {runningEvent.confidence && (
                   <TableCell>{runningEvent.confidence}</TableCell>
@@ -64,7 +64,7 @@ const RunningDisplayPage = () => {
                 <TableCell>
                   {typeof runningEvent.activityAreas.activityArea ===
                   "string" ? (
-                    <p>{runningEvent.activityAreas.activityArea}</p>
+                    <div>{runningEvent.activityAreas.activityArea}</div>
                   ) : (
                     Array.isArray(runningEvent.activityAreas.activityArea) &&
                     runningEvent.activityAreas.activityArea.map((item, idx) => (
@@ -77,7 +77,7 @@ const RunningDisplayPage = () => {
 
                 <TableCell>
                   {typeof runningEvent.startPeriods.startPeriod === "string" ? (
-                    <p>{runningEvent.startPeriods.startPeriod}</p>
+                    <div>{runningEvent.startPeriods.startPeriod}</div>
                   ) : (
                     Array.isArray(runningEvent.startPeriods.startPeriod) &&
                     runningEvent.startPeriods.startPeriod.map((item, idx) => (
@@ -87,7 +87,7 @@ const RunningDisplayPage = () => {
                 </TableCell>
                 <TableCell>
                   {typeof runningEvent.raceTypes.raceType === "string" ? (
-                    <p>{runningEvent.raceTypes.raceType}</p>
+                    <div>{runningEvent.raceTypes.raceType}</div>
                   ) : (
                     Array.isArray(runningEvent.raceTypes.raceType) &&
                     runningEvent.raceTypes.raceType.map((item, idx) => (
@@ -97,7 +97,7 @@ const RunningDisplayPage = () => {
                 </TableCell>
                 <TableCell>
                   {typeof runningEvent.prices.price === "string" ? (
-                    <p>{runningEvent.prices.price}</p>
+                    <div>{runningEvent.prices.price}</div>
                   ) : (
                     Array.isArray(runningEvent.prices.price) &&
                     runningEvent.prices.price.map((item, idx) => (
@@ -107,7 +107,7 @@ const RunningDisplayPage = () => {
                 </TableCell>
                 <TableCell>
                   {typeof runningEvent.rewards.reward === "string" ? (
-                    <p>{runningEvent.rewards.reward}</p>
+                    <div>{runningEvent.rewards.reward}</div>
                   ) : (
                     Array.isArray(runningEvent.rewards.reward) &&
                     runningEvent.rewards.reward.map((item, idx) => (
@@ -127,7 +127,7 @@ const RunningDisplayPage = () => {
                   <DrawerTitle>{runningEvent.runningEventName}</DrawerTitle>
                   <DrawerDescription>
                     Travel places for {runningEvent.runningEventName}
-                    <ScrollArea className="h-[1200px]">
+                    <ScrollArea className="h-[700px]">
                       <div className="mr-11">
                         {runningEvent.travelPlacesRunning.map(
                           (place, index) => (
@@ -139,27 +139,26 @@ const RunningDisplayPage = () => {
                                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-700">
                                   {index + 1}
                                 </div>
-                                <p>{place.travelPlaceName}</p>
+                                <div>{place.travelPlaceName}</div>
                               </div>
 
                               <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
                                 <Flame className="h-4 w-4 text-orange-500" />
-                                <p>{place.hotScore}</p>
+                                <div>{place.hotScore}</div>
 
                                 {place.district?.trim() && (
-                                  <p>• {place.district}</p>
+                                  <div>• {place.district}</div>
                                 )}
 
                                 {place.travelPlaceType?.trim() && (
-                                  <p>• {place.travelPlaceType}</p>
+                                  <div>• {place.travelPlaceType}</div>
                                 )}
                               </div>
 
                               <div className="mt-2 text-xs text-muted-foreground">
-                                <p>
-                                  Lat: {place.latitude} | Long:{" "}
-                                  {place.longitude}
-                                </p>
+                                <div>
+                                  Lat: {place.latitude} | Long: {place.longitude}
+                                </div>
                               </div>
                             </div>
                           )

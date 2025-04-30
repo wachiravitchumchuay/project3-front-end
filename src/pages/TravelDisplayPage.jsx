@@ -112,23 +112,23 @@ const TravelDisplayPage = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-700">
                         {index + 1}
                       </div>
-                      <p>{place.travelPlaceName}</p>
+                      <div>{place.travelPlaceName}</div>
                     </div>
 
                     <div className="mt-2 flex items-center gap-2 text-md text-muted-foreground">
                       <Flame className="h-4 w-4 text-orange-500 " />
-                      <p>{place.hotScore}</p>
+                      <div>{place.hotScore}</div>
 
-                      {place.district?.trim() && <p>• {place.district}</p>}
+                      {place.district?.trim() && <div>• {place.district}</div>}
                       {place.travelPlaceType?.trim() && (
-                        <p>• {place.travelPlaceType}</p>
+                        <div>• {place.travelPlaceType}</div>
                       )}
                     </div>
 
                     <div className="mt-2 text-xs text-muted-foreground">
-                      <p>
+                      <div>
                         Lat: {place.latitude} | Long: {place.longitude}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </CarouselItem>
