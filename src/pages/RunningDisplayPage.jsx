@@ -100,13 +100,16 @@ const RunningDisplayPage = () => {
               <DrawerContent className="justify-center">
                 <DrawerHeader>
                   <DrawerTitle>{runningEvent.runningEventName}</DrawerTitle>
-                  <DrawerDescription >
+                  <DrawerDescription>
                     Travel places for {runningEvent.runningEventName}
                     <ScrollArea className="h-[1200px]">
                       <div className="mr-11">
                         {runningEvent.travelPlacesRunning.map(
                           (place, index) => (
-                            <div className="my-3 rounded-lg border p-4 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-auto">
+                            <div
+                              className="my-3 rounded-lg border p-4 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-auto"
+                              key={index}
+                            >
                               <div className="flex items-center gap-2 font-semibold text-lg">
                                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-700">
                                   {index + 1}
@@ -117,10 +120,15 @@ const RunningDisplayPage = () => {
                               <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
                                 <Flame className="h-4 w-4 text-orange-500" />
                                 <p>{place.hotScore}</p>
-                                <span>•</span>
-                                <p>{place.district}</p>
-                                <span>•</span>
-                                <p>{place.travelPlaceType}</p>
+
+                                {place.district?.trim() && (
+                                  <p>• {place.district}</p>
+                                )}
+
+                                {place.travelPlaceType?.trim() && (
+                                  <p>• {place.travelPlaceType}</p>
+                                )}
+                                
                               </div>
 
                               <div className="mt-2 text-xs text-muted-foreground">

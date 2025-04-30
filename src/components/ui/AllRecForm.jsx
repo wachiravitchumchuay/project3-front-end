@@ -90,19 +90,22 @@ const AllRecForm = () => {
     { value: "MiniMarathon", label: "Mini Marathon" },
     { value: "HalfMarathon", label: "Half Marathon" },
     { value: "Marathon", label: "Marathon" },
-  ];;
+  ];
   const typeofEvents = [
     { value: "CharityEvent", label: "Charity Event" },
     { value: "CompetitiveEvent", label: "Competitive Event" },
   ];
   const prices = ["Economy", "Average", "Premium"];
-  
+
   const organizations = [
     { value: "SirirojHospital", label: "Siriroj Hospital" },
     { value: "RedCrossPhuket", label: "Red Cross Phuket" },
     { value: "PhuketNightRun", label: "Phuket Night Run" },
     { value: "RawaiMunicipality", label: "Rawai Municipality" },
-    { value: "MarriottInternationalHotel", label: "Marriott International Hotel" },
+    {
+      value: "MarriottInternationalHotel",
+      label: "Marriott International Hotel",
+    },
     { value: "MoveAsia", label: "MoveAsia" },
     { value: "BangkokAirways", label: "Bangkok Airways" },
     { value: "RotaryPhuket", label: "Rotary Phuket" },
@@ -111,15 +114,15 @@ const AllRecForm = () => {
   ];
   const activityAreas = ["Natural", "City"];
 
-const standards = [
-  { value: "StandardEvent", label: "Standard Event" },
-  { value: "No", label: "Not Standard Event" },
-];
+  const standards = [
+    { value: "StandardEvent", label: "Standard Event" },
+    { value: "No", label: "Not Standard Event" },
+  ];
 
-const levels = [
-  { value: "InternationalEvent", label: "International Event" },
-  { value: "LocalEvent", label: "Local Event" },
-];
+  const levels = [
+    { value: "InternationalEvent", label: "International Event" },
+    { value: "LocalEvent", label: "Local Event" },
+  ];
   const startPeriods = ["Morning", "Evening", "Night"];
   const rewards = [
     { value: "Medal", label: "Medal" },
@@ -266,7 +269,7 @@ const levels = [
       </soapenv:Body>
   </soapenv:Envelope>
       `;
-      console.log(soapBody);
+    console.log(soapBody);
     try {
       const response = await axios.post("http://localhost:8080/ws", soapBody, {
         headers: {
@@ -848,7 +851,10 @@ const levels = [
                         </SelectTrigger>
                         <SelectContent>
                           {standards.map((standard) => (
-                            <SelectItem key={standard.value} value={standard.value}>
+                            <SelectItem
+                              key={standard.value}
+                              value={standard.value}
+                            >
                               {standard.label}
                             </SelectItem>
                           ))}

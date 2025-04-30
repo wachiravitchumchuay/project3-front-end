@@ -1,6 +1,5 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -8,15 +7,20 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { useAppContext } from "../context/AppContext";
-//TODO display data
+
 const getRandomImagePath = (type) => {
-  if (type) {
+  const districts = [
+    "Thalang District",
+    "Kathu District",
+    "Mueang Phuket District",
+  ];
+
+  if (districts.includes(type)) {
     const randomIndex = Math.floor(Math.random() * 3) + 1;
-    const path = `/travelPlaces/${type}/${type}${randomIndex}_result.webp`;
-    return path;
-  } else {
-    return "/travelPlaces/Kathu District/Kathu District1_result.webp";
+    return `/travelPlaces/${type}/${type}${randomIndex}_result.webp`;
   }
+
+  return "/travelPlaces/Kathu District/Kathu District1_result.webp"; //default
 };
 
 const TravelDisplayPage = () => {
@@ -86,39 +90,47 @@ const TravelDisplayPage = () => {
         >
           {/* <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))] 2xl:ml-[max(8rem,calc(50vw-700px+1rem))]"> */}
           <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))]">
-            {travelPlaces.map((item, index) => {
-              const imagePath = getRandomImagePath(item.district);
+            {travelPlaces.map((place, index) => {
+              const imagePath = getRandomImagePath(place.district);
               return (
                 <CarouselItem key={index} className="pl-4 md:max-w-[452px]">
-                  <a
-                    href={item.url}
-                    className="group flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex aspect-[3/2] overflow-clip rounded-xl">
-                        <div className="flex-1">
-                          <div className="relative h-full w-full origin-bottom transition duration-300 group-hover:scale-105">
-                            <img
-                              src={imagePath}
-                              alt={item.travelPlaceName}
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
+                  <div>
+                    <div className="flex aspect-[3/2] overflow-clip rounded-xl">
+                      <div className="flex-1">
+                        <div className="relative h-full w-full origin-bottom transition duration-300 group-hover:scale-105">
+                          <img
+                            src={imagePath}
+                            alt={place.travelPlaceName}
+                            className="h-full w-full object-cover object-center"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div className="mb-2 line-clamp-3 pt-4 text-lg font-medium break-words md:mb-3 md:pt-4 md:text-xl lg:pt-4 lg:text-2xl">
-                      {item.travelPlaceName}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 font-semibold text-lg">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-700">
+                        {index + 1}
+                      </div>
+                      <p>{place.travelPlaceName}</p>
                     </div>
-                    <div className="mb-8 line-clamp-2 text-sm text-muted-foreground md:mb-12 md:text-base lg:mb-9">
-                      <p>{item.travelPlaceType}</p>
-                      <p>{item.district}</p>
+
+                    <div className="mt-2 flex items-center gap-2 text-md text-muted-foreground">
+                      <Flame className="h-4 w-4 text-orange-500 " />
+                      <p>{place.hotScore}</p>
+
+                      {place.district?.trim() && <p>• {place.district}</p>}
+                      {place.travelPlaceType?.trim() && (
+                        <p>• {place.travelPlaceType}</p>
+                      )}
                     </div>
-                    <div className="flex items-center text-sm">
-                      Read more
-                      <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      <p>
+                        Lat: {place.latitude} | Long: {place.longitude}
+                      </p>
                     </div>
-                  </a>
+                  </div>
                 </CarouselItem>
               );
             })}
@@ -129,6 +141,10 @@ const TravelDisplayPage = () => {
   );
 };
 export default TravelDisplayPage;
+
+// travelPlaceName
+// hotScore travelPlaceType
+// district longitude latitude
 
 // travelPlaceName
 // travelPlaceType
