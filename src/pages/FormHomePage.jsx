@@ -31,11 +31,10 @@ const FormHomePage = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="text-white bg-green-3 flex flex-col justify-center items-center">
-            <div className="pt-18 flex flex-col justify-center items-center text-center">
+            <div className="pt-12 flex flex-col justify-center items-center text-center">
               <div className="font-head text-6xl">Recommender</div>
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium, ullam!
+              <div className="mt-2 text-xl">
+                  Discover where to eat, where to go, and what to do 
               </div>
             </div>
             <div className="p-6">

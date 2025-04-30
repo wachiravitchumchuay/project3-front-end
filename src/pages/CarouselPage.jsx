@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import Autoplay from "embla-carousel-autoplay"
-
+import Autoplay from "embla-carousel-autoplay";
 
 import {
   Carousel,
@@ -13,7 +12,6 @@ import {
 } from "@/components/ui/carousel";
 
 const CarouselPage = () => {
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,10 +36,7 @@ const CarouselPage = () => {
             >
               <CarouselContent>
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem
-                    key={index}
-                    className=""
-                  >
+                  <CarouselItem key={index} className="">
                     <div>
                       <Card className="py-2">
                         <CardContent className="px-2 h-[500px]">
@@ -57,13 +52,16 @@ const CarouselPage = () => {
                 ))}
               </CarouselContent>
               <CarouselPrevious className="text-black" />
-              <CarouselNext className="text-black"/>
-                
+              <CarouselNext className="text-black" />
             </Carousel>
           </div>
           <div className="w-2/5 p-28">
-            <div className="font-head text-6xl">Description </div>
-            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas earum velit modi placeat aliquam fugit perspiciatis error accusantium quo cupiditate.</div>
+            <div className="font-head text-6xl">Explore </div>
+            <div className="mt-6">
+              The best of Phuket with personalized restaurant picks, matching
+              travel spots, and running events — designed around your choices
+              and lifestyle.
+            </div>
           </div>
         </div>
       </div>
