@@ -21,6 +21,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+
+//TODO: if log in add that it get input from userprofile 
 const AllRecForm = () => {
   const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
   const nutrientLevels = ["Low", "Medium", "High"];

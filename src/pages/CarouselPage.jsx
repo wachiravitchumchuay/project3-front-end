@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
+//TODO: change to running picture
 const CarouselPage = () => {
   return (
     <motion.div

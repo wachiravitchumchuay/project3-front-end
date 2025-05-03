@@ -13,17 +13,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import SignUpForm from "@/components/ui/SignUpForm";
-import SingInForm from "@/components/ui/SignInForm";
+import SignInForm from "@/components/ui/SignInForm";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import CarouselPage from "./pages/CarouselPage";
 import FormHomePage from "./pages/FormHomePage";
+import { Toaster } from "sonner";
 
+//TODO: change website to running
+	// running
+	// travel
+	// restaurant
 function App() {
   const [activeTab, setActiveTab] = useState("/HomePage");
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  
 
   return (
     <AppProvider>
+      <Toaster richColors position="top-center" />
       <div className="font-body ">
         <div className="bg-green-2 text-white min-h-[50vh] ">
           <div className="pl-24">
@@ -33,7 +41,11 @@ function App() {
                 setActiveTab={setActiveTab}
               />
               <div className="flex mr-24">
-                <Dialog>
+                {/* //TODO: when sing in display username and make log out */}
+                <Dialog
+                  open={loginDialogOpen}
+                  onOpenChange={setLoginDialogOpen}
+                >
                   <DialogTrigger asChild>
                     <Button
                       variant="ghost"
@@ -43,25 +55,16 @@ function App() {
                       Sign in
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-md">
+                  <DialogContent className="min-w-lg">
                     <DialogHeader>
-                      <DialogTitle>Share link</DialogTitle>
-                      <DialogDescription>
-                        Anyone who has this link will be able to view this.
-                      </DialogDescription>
+                      <DialogTitle className="text-2xl font-bold">
+                        Login to your account
+                      </DialogTitle>
+                      <DialogDescription/>
                     </DialogHeader>
-                    <div className="flex items-center space-x-2">
-                      <div className="grid flex-1 gap-2">
-                        <SignUpForm />
-                      </div>
+                    <div className="flex flex-1 items-center justify-center">
+                      <SignInForm onSuccess={() => setLoginDialogOpen(false)} />
                     </div>
-                    <DialogFooter className="sm:justify-start">
-                      <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                          Close
-                        </Button>
-                      </DialogClose>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
 
@@ -84,7 +87,7 @@ function App() {
                     </DialogHeader>
                     <div className="flex items-center space-x-2">
                       <div className="grid flex-1 gap-2">
-                      <SingInForm />
+                        <SignUpForm />
                       </div>
                     </div>
                     <DialogFooter className="sm:justify-start">
