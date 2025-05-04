@@ -112,9 +112,10 @@ const FormHomePage = () => {
             </div>
           )}
 
-          {restaurants && restaurants.length > 0 && <RestaurantDisplayPage />}
+          {runningEvents && runningEvents.length > 0 && <RunningDisplayPage />}       
           {travelPlaces && travelPlaces.length > 0 && <TravelDisplayPage />}
-          {runningEvents && runningEvents.length > 0 && <RunningDisplayPage />}
+          {restaurants && restaurants.length > 0 && <RestaurantDisplayPage />}
+          
         </div>
       )}
     </div>

@@ -56,8 +56,8 @@ const SignInForm = ({ onSuccess }) => {
       const message = res["message"];
 
       if (status === 0) {
-        toast.success("Login Successful");
-        onSuccess();
+        toast.success("Sign In Successful");
+        onSuccess(values.username);
       } else {
         toast.error(message || "Invalid username or password.");
         form.reset();
@@ -103,7 +103,7 @@ const SignInForm = ({ onSuccess }) => {
             />
 
             <Button type="submit" className="w-full">
-              Login
+              Sign In
             </Button>
           </div>
 

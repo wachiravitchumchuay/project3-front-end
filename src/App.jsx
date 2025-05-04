@@ -19,15 +19,14 @@ import AboutPage from "./pages/AboutPage";
 import CarouselPage from "./pages/CarouselPage";
 import FormHomePage from "./pages/FormHomePage";
 import { Toaster } from "sonner";
+import { toast } from "sonner";
 
 //TODO: change website to running
-	// running
-	// travel
-	// restaurant
 function App() {
   const [activeTab, setActiveTab] = useState("/HomePage");
+  const [login, setLogin] = useState(false);
+  const [username, setUsername] = useState("");
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-  
 
   return (
     <AppProvider>
@@ -41,29 +40,55 @@ function App() {
                 setActiveTab={setActiveTab}
               />
               <div className="flex mr-24">
-                {/* //TODO: when sing in display username and make log out */}
                 <Dialog
                   open={loginDialogOpen}
                   onOpenChange={setLoginDialogOpen}
                 >
+                  {login && (
+                    <div className="flex items-center">
+                      <div className="text-xl">{username}</div>
+                    </div>
+                  )}
                   <DialogTrigger asChild>
+                    {!login && (
+                      <Button
+                        variant="ghost"
+                        size="lg"
+                        className="text-lg hover:bg-green-3 hover:text-white"
+                      >
+                        Sign in
+                      </Button>
+                    )}
+                  </DialogTrigger>
+                  {login && (
                     <Button
                       variant="ghost"
                       size="lg"
                       className="text-lg hover:bg-green-3 hover:text-white"
+                      onClick={() => {
+                        setLogin(false);
+                        toast.success("Sign Out Successful");
+                      }}
                     >
-                      Sign in
+                      Sign out
                     </Button>
-                  </DialogTrigger>
+                  )}
+
                   <DialogContent className="min-w-lg">
                     <DialogHeader>
                       <DialogTitle className="text-2xl font-bold">
                         Login to your account
                       </DialogTitle>
-                      <DialogDescription/>
+                      <DialogDescription />
                     </DialogHeader>
                     <div className="flex flex-1 items-center justify-center">
-                      <SignInForm onSuccess={() => setLoginDialogOpen(false)} />
+                      <SignInForm
+                        onSuccess={(usr) => {
+                          setLogin(true),
+                            setLoginDialogOpen(false),
+                            setUsername(usr);
+                        }}
+                      />
                     </div>
                   </DialogContent>
                 </Dialog>
