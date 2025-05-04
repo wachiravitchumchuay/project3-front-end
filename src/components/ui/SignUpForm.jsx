@@ -143,7 +143,7 @@ const SignUpForm = ({ onSuccess }) => {
     PreRunProteinConsumtion: z.string(),
     hasRestaurantTypeInterest: z.string(),
     RunnerType: z.string(),
-    BudgetInteresets: z.string(),
+    BudgetInterests: z.string(),
     hasFoodTypeInterests: z
       .array(z.string())
       .nonempty({ message: "Food type interest is required." }),
@@ -172,7 +172,7 @@ const SignUpForm = ({ onSuccess }) => {
       PreRunProteinConsumtion: "Medium",
       hasRestaurantTypeInterest: "Fine_Dining_Type",
       RunnerType: "Fun run",
-      BudgetInteresets: JSON.stringify([301, 600]),
+      BudgetInterests: JSON.stringify([301, 600]),
       hasFoodTypeInterests: [
         "ALaCarte_Type",
         "Bakery_Cake_Type",
@@ -215,7 +215,7 @@ const SignUpForm = ({ onSuccess }) => {
   });
 
   const onSubmit = async (values) => {
-    let budgetInterests = JSON.parse(values.BudgetInteresets);
+    let budgetInterests = JSON.parse(values.BudgetInterests);
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
@@ -245,10 +245,10 @@ const SignUpForm = ({ onSuccess }) => {
                  values.PostRunProteinConsumtion
                }</PostRunProteinConsumtion>
                <RunnerType>${values.RunnerType}</RunnerType>
-               <BudgetInteresets>
-                  <BudgetIntereset>${budgetInterests[0]}</BudgetIntereset>
-                  <BudgetIntereset>${budgetInterests[1]}</BudgetIntereset>
-               </BudgetInteresets>
+               <BudgetInterests>
+                  <BudgetInterest>${budgetInterests[0]}</BudgetInterest>
+                  <BudgetInterest>${budgetInterests[1]}</BudgetInterest>
+               </BudgetInterests>
                <hasRestaurantTypeInterest>${
                  values.hasRestaurantTypeInterest
                }</hasRestaurantTypeInterest>
@@ -550,7 +550,7 @@ const SignUpForm = ({ onSuccess }) => {
                 {/* Budget Interests */}
                 <FormField
                   control={form.control}
-                  name="BudgetInteresets"
+                  name="BudgetInterests"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Budget</FormLabel>

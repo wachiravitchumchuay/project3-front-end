@@ -21,10 +21,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-
-//TODO: if log in add that it get input from userprofile 
+import { Toggle } from "@/components/ui/toggle";
+import { FileUser } from "lucide-react";
+import { useState } from "react";
 const AllRecForm = () => {
-  const { setRestaurants, setRunningEvents, setTravelPlaces} = useAppContext();
+  const {
+    setRestaurants,
+    setRunningEvents,
+    setTravelPlaces,
+    userData,
+    signIn,
+  } = useAppContext();
+  const [toggleState, setToggleState] = useState(false);
   const nutrientLevels = ["Low", "Medium", "High"];
   const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
   const budgetRanges = [
@@ -142,10 +150,8 @@ const AllRecForm = () => {
     PreRunProteinConsumtion: z.string(),
     hasRestaurantTypeInterest: z.string(),
     RunnerType: z.string(),
-    BudgetInteresets: z.string(),
-    hasFoodTypeInterests: z
-      .array(z.string())
-      .nonempty({ message: "Food type interest is required." }),
+    BudgetInterests: z.string(),
+    hasFoodTypeInterests: z.array(z.string()),
     travelPlaceType: z.string(),
     district: z.string(),
     raceType: z.string(),
@@ -169,7 +175,7 @@ const AllRecForm = () => {
       PreRunProteinConsumtion: "Medium",
       hasRestaurantTypeInterest: "Fine_Dining_Type",
       RunnerType: "Fun run",
-      BudgetInteresets: JSON.stringify([301, 600]),
+      BudgetInterests: JSON.stringify([301, 600]),
       hasFoodTypeInterests: [
         "ALaCarte_Type",
         "Bakery_Cake_Type",
@@ -212,49 +218,76 @@ const AllRecForm = () => {
   });
 
   const onSubmit = async (values) => {
-    let budgetInterests = JSON.parse(values.BudgetInteresets);
+    if (!toggleState && (!values.hasFoodTypeInterests || values.hasFoodTypeInterests.length === 0)) {
+      form.setError("hasFoodTypeInterests", {
+        type: "manual",
+        message: "Food type interest is required",
+      });
+      return;
+    }
+    let budgetInterests = JSON.parse(values.BudgetInterests);
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
-    const soapBody = `
+    let soapBody;
+    console.log(userData)
+    if (toggleState) {
+      soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
       <soapenv:Header />
       <soapenv:Body>
           <sch:getAllRecommendationRequest>
-               <PreRunCarbConsumtion>${
-                 values.PreRunCarbConsumtion
-               }</PreRunCarbConsumtion>
-               <PreRunFatConsumtion>${
-                 values.PreRunFatConsumtion
-               }</PreRunFatConsumtion>
-               <PreRunProteinConsumtion>${
-                 values.PreRunProteinConsumtion
-               }</PreRunProteinConsumtion>
-               <PostRunCarbConsumtion>${
-                 values.PostRunCarbConsumtion
-               }</PostRunCarbConsumtion>
-               <PostRunFatConsumtion>${
-                 values.PostRunFatConsumtion
-               }</PostRunFatConsumtion>
-               <PostRunProteinConsumtion>${
-                 values.PostRunProteinConsumtion
-               }</PostRunProteinConsumtion>
-               <RunnerType>${values.RunnerType}</RunnerType>
-               <BudgetInteresets>
-                  <BudgetIntereset>${budgetInterests[0]}</BudgetIntereset>
-                  <BudgetIntereset>${budgetInterests[1]}</BudgetIntereset>
-               </BudgetInteresets>
-               <hasRestaurantTypeInterest>${
-                 values.hasRestaurantTypeInterest
-               }</hasRestaurantTypeInterest>
-               <hasFoodTypeInterests>
-                  ${values.hasFoodTypeInterests
-                    .map(
-                      (food) =>
-                        `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`
-                    )
-                    .join("")}
-               </hasFoodTypeInterests>
+                <PreRunCarbConsumtion>${userData.PreRunCarbConsumtion}</PreRunCarbConsumtion>
+                <PreRunFatConsumtion>${userData.PreRunFatConsumtion}</PreRunFatConsumtion>
+                <PreRunProteinConsumtion>${userData.PreRunProteinConsumtion}</PreRunProteinConsumtion>
+                <PostRunCarbConsumtion>${userData.PostRunCarbConsumtion}</PostRunCarbConsumtion>
+                <PostRunFatConsumtion>${userData.PostRunFatConsumtion}</PostRunFatConsumtion>
+                <PostRunProteinConsumtion>${userData.PostRunProteinConsumtion}</PostRunProteinConsumtion>
+                <RunnerType>${userData.RunnerType}</RunnerType>
+                <BudgetInterests>
+                  <BudgetInterest>${userData.BudgetInterests[0]}</BudgetInterest>
+                  <BudgetInterest>${userData.BudgetInterests[1]}</BudgetInterest>
+                </BudgetInterests>
+                <hasRestaurantTypeInterest>${userData.hasRestaurantTypeInterest}</hasRestaurantTypeInterest>
+                <hasFoodTypeInterests>${userData.hasFoodTypeInterests.map((food) =>
+                  `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`).join("")}
+                </hasFoodTypeInterests>
+              <travelPlaceType>${userData.travelPlaceType}</travelPlaceType>
+              <district>${userData.district}</district>
+              <raceType>${userData.raceType}</raceType>
+              <typeofEvent>${userData.typeofEvent}</typeofEvent>
+              <price>${userData.price}</price>
+              <organization>${userData.organization}</organization>
+              <activityArea>${userData.activityArea}</activityArea>
+              <standard>${userData.standard}</standard>
+              <level>${userData.level}</level>
+              <startPeriod>${userData.startPeriod}</startPeriod>
+              <reward>${userData.reward}</reward>
+          </sch:getAllRecommendationRequest>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    `;
+    } else {
+      soapBody = `
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
+      <soapenv:Header />
+      <soapenv:Body>
+          <sch:getAllRecommendationRequest>
+                <PreRunCarbConsumtion>${values.PreRunCarbConsumtion}</PreRunCarbConsumtion>
+                <PreRunFatConsumtion>${values.PreRunFatConsumtion}</PreRunFatConsumtion>
+                <PreRunProteinConsumtion>${values.PreRunProteinConsumtion}</PreRunProteinConsumtion>
+                <PostRunCarbConsumtion>${values.PostRunCarbConsumtion}</PostRunCarbConsumtion>
+                <PostRunFatConsumtion>${values.PostRunFatConsumtion}</PostRunFatConsumtion>
+                <PostRunProteinConsumtion>${values.PostRunProteinConsumtion}</PostRunProteinConsumtion>
+                <RunnerType>${values.RunnerType}</RunnerType>
+                <BudgetInterests>
+                  <BudgetInterest>${budgetInterests[0]}</BudgetInterest>
+                  <BudgetInterest>${budgetInterests[1]}</BudgetInterest>
+                </BudgetInterests>
+                <hasRestaurantTypeInterest>${values.hasRestaurantTypeInterest}</hasRestaurantTypeInterest>
+                <hasFoodTypeInterests>${values.hasFoodTypeInterests.map((food) =>
+                  `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`).join("")}
+                </hasFoodTypeInterests>
               <travelPlaceType>${values.travelPlaceType}</travelPlaceType>
               <district>${values.district}</district>
               <raceType>${values.raceType}</raceType>
@@ -268,8 +301,10 @@ const AllRecForm = () => {
               <reward>${values.reward}</reward>
           </sch:getAllRecommendationRequest>
       </soapenv:Body>
-  </soapenv:Envelope>
-      `;
+    </soapenv:Envelope>
+    `;
+    }
+
     try {
       const response = await axios.post("http://localhost:8080/ws", soapBody, {
         headers: {
@@ -524,7 +559,7 @@ const AllRecForm = () => {
                 {/* Budget Interests */}
                 <FormField
                   control={form.control}
-                  name="BudgetInteresets"
+                  name="BudgetInterests"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Budget</FormLabel>
@@ -952,7 +987,22 @@ const AllRecForm = () => {
             </div>
           </div>
 
+          <div className="flex items-center">
           <Button type="submit">Submit</Button>
+          {signIn && (
+            <div className="ml-2">
+              <Toggle
+                variant="outline"
+                size="lg"
+                pressed={toggleState}
+                onPressedChange={setToggleState}
+                className="data-[state=on]:bg-green-3 data-[state=on]:text-white"
+              >
+                <FileUser /> <div>Use Profile Info</div>
+              </Toggle>
+            </div>
+          )}
+        </div>
         </form>
       </Form>
     </div>

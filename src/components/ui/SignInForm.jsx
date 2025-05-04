@@ -86,7 +86,7 @@ const SignInForm = ({ onSuccess }) => {
             PreRunProteinConsumtion: res["PreRunProteinConsumtion"],
             hasRestaurantTypeInterest: res["hasRestaurantTypeInterest"],
             RunnerType: res["RunnerType"],
-            BudgetInteresets: res["BudgetInteresets"]?.["BudgetInterest"] ?? [],
+            BudgetInterests: res["BudgetInterests"]?.["BudgetInterest"] ?? [],
             hasFoodTypeInterests: res["hasFoodTypeInterests"]?.["hasFoodTypeInterest"] ?? [],
           };
           console.log(newData)

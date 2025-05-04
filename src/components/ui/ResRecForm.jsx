@@ -105,7 +105,7 @@ const ResRecForm = () => {
       .string()
       .nonempty({ message: "Restaurant type interest is required." }),
     RunnerType: z.string().nonempty({ message: "Runner type is required." }),
-    BudgetInteresets: z
+    BudgetInterests: z
       .string()
       .nonempty({ message: "At least two budget interests are required." }),
     hasFoodTypeInterests: z
@@ -122,7 +122,7 @@ const ResRecForm = () => {
       PreRunProteinConsumtion: "Medium",
       hasRestaurantTypeInterest: "Fine_Dining_Type",
       RunnerType: "Fun run",
-      BudgetInteresets: JSON.stringify([301, 600]),
+      BudgetInterests: JSON.stringify([301, 600]),
       hasFoodTypeInterests: [],
     },
   });
@@ -136,10 +136,11 @@ const ResRecForm = () => {
       });
       return;
     }
-    let budgetInterests = JSON.parse(values.BudgetInteresets);
+    let budgetInterests = JSON.parse(values.BudgetInterests);
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
+    console.log(userData)
     let soapBody;
     if (toggleState) {
       soapBody = `
@@ -166,14 +167,10 @@ const ResRecForm = () => {
                  userData.PostRunProteinConsumtion
                }</PostRunProteinConsumtion>
                <RunnerType>${userData.RunnerType}</RunnerType>
-               <BudgetInteresets>
-                  <BudgetIntereset>${
-                    userData.BudgetInteresets[0]
-                  }</BudgetIntereset>
-                  <BudgetIntereset>${
-                    userData.BudgetInteresets[1]
-                  }</BudgetIntereset>
-               </BudgetInteresets>
+               <BudgetInterests>
+                  <BudgetInterest>${userData.BudgetInterests[0]}</BudgetInterest>
+                  <BudgetInterest>${userData.BudgetInterests[1]}</BudgetInterest>
+               </BudgetInterests>
                <hasRestaurantTypeInterest>${
                  userData.hasRestaurantTypeInterest
                }</hasRestaurantTypeInterest>
@@ -213,10 +210,10 @@ const ResRecForm = () => {
                  values.PostRunProteinConsumtion
                }</PostRunProteinConsumtion>
                <RunnerType>${values.RunnerType}</RunnerType>
-               <BudgetInteresets>
-                  <BudgetIntereset>${budgetInterests[0]}</BudgetIntereset>
-                  <BudgetIntereset>${budgetInterests[1]}</BudgetIntereset>
-               </BudgetInteresets>
+               <BudgetInterests>
+                  <BudgetInterest>${budgetInterests[0]}</BudgetInterest>
+                  <BudgetInterest>${budgetInterests[1]}</BudgetInterest>
+               </BudgetInterests>
                <hasRestaurantTypeInterest>${
                  values.hasRestaurantTypeInterest
                }</hasRestaurantTypeInterest>
@@ -450,7 +447,7 @@ const ResRecForm = () => {
           {/* Budget Interests */}
           <FormField
             control={form.control}
-            name="BudgetInteresets"
+            name="BudgetInterests"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Budget</FormLabel>
