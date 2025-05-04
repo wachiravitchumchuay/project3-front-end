@@ -24,7 +24,7 @@ import { Separator } from "@/components/ui/separator";
 
 //TODO: if log in add that it get input from userprofile 
 const AllRecForm = () => {
-  const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
+  const { setRestaurants, setRunningEvents, setTravelPlaces} = useAppContext();
   const nutrientLevels = ["Low", "Medium", "High"];
   const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
   const budgetRanges = [

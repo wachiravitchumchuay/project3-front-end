@@ -100,7 +100,7 @@ function App() {
                     <Button
                       variant="outline"
                       size="lg"
-                      className=" bg-green-2 ml-2 text-lg hover:bg-green-3 hover:text-white"
+                      className="border-2 border-white bg-green-2 ml-2 text-lg hover:bg-green-3 hover:text-white"
                     >
                       Sign up
                     </Button>

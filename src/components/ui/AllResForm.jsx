@@ -11,7 +11,7 @@ const AllResForm = () => {
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
          <soapenv:Header/>
          <soapenv:Body>
-            <sch:getRestaurantRequest/>
+            <sch:getAllRestaurantRequest/>
          </soapenv:Body>
       </soapenv:Envelope>
     `;
@@ -37,7 +37,7 @@ const AllResForm = () => {
         const parsedData = parser.parse(xmlData);
         const restaurants =
           parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
-            "ns3:getRestaurantResponse"
+            "ns3:getAllRestaurantResponse"
           ].restaurants;
         
         console.table(restaurants)

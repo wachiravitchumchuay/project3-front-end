@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppContext } from "@/context/AppContext";
@@ -20,10 +21,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Toggle } from "@/components/ui/toggle";
+import { FileUser } from "lucide-react";
 
-//TODO: if log in add that it get input from userprofile 
 const ResRecForm = () => {
-  const { setRestaurants, setRunningEvents, setTravelPlaces } = useAppContext();
+  const {
+    setRestaurants,
+    setRunningEvents,
+    setTravelPlaces,
+    userData,
+    signIn,
+  } = useAppContext();
+  const [toggleState, setToggleState] = useState(false);
   const nutrientLevels = ["Low", "Medium", "High"];
   const runnerTypes = ["Fun run", "Mini Marathon", "Half Marathon", "Marathon"];
   const budgetRanges = [
@@ -72,6 +81,7 @@ const ResRecForm = () => {
     "Burger_Type",
   ];
 
+
   const formSchema = z.object({
     PostRunCarbConsumtion: z
       .string()
@@ -100,7 +110,6 @@ const ResRecForm = () => {
       .nonempty({ message: "At least two budget interests are required." }),
     hasFoodTypeInterests: z
       .array(z.string())
-      .nonempty({ message: "Food type interest is required." }),
   });
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -119,12 +128,68 @@ const ResRecForm = () => {
   });
 
   const onSubmit = async (values) => {
+
+    if (!toggleState && (!values.hasFoodTypeInterests || values.hasFoodTypeInterests.length === 0)) {
+      form.setError("hasFoodTypeInterests", {
+        type: "manual",
+        message: "Food type interest is required",
+      });
+      return;
+    }
     let budgetInterests = JSON.parse(values.BudgetInteresets);
     if (!Array.isArray(budgetInterests)) {
       budgetInterests = [budgetInterests];
     }
-    console.log(values);
-    const soapBody = `
+    let soapBody;
+    if (toggleState) {
+      soapBody = `
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <sch:getRestaurantRecommendationRequest>
+               <PreRunCarbConsumtion>${
+                 userData.PreRunCarbConsumtion
+               }</PreRunCarbConsumtion>
+               <PreRunFatConsumtion>${
+                 userData.PreRunFatConsumtion
+               }</PreRunFatConsumtion>
+               <PreRunProteinConsumtion>${
+                 userData.PreRunProteinConsumtion
+               }</PreRunProteinConsumtion>
+               <PostRunCarbConsumtion>${
+                 userData.PostRunCarbConsumtion
+               }</PostRunCarbConsumtion>
+               <PostRunFatConsumtion>${
+                 userData.PostRunFatConsumtion
+               }</PostRunFatConsumtion>
+               <PostRunProteinConsumtion>${
+                 userData.PostRunProteinConsumtion
+               }</PostRunProteinConsumtion>
+               <RunnerType>${userData.RunnerType}</RunnerType>
+               <BudgetInteresets>
+                  <BudgetIntereset>${
+                    userData.BudgetInteresets[0]
+                  }</BudgetIntereset>
+                  <BudgetIntereset>${
+                    userData.BudgetInteresets[1]
+                  }</BudgetIntereset>
+               </BudgetInteresets>
+               <hasRestaurantTypeInterest>${
+                 userData.hasRestaurantTypeInterest
+               }</hasRestaurantTypeInterest>
+               <hasFoodTypeInterests>${userData.hasFoodTypeInterests
+                 .map(
+                   (food) =>
+                     `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`
+                 )
+                 .join("")}
+               </hasFoodTypeInterests>
+            </sch:getRestaurantRecommendationRequest>
+         </soapenv:Body>
+      </soapenv:Envelope>
+    `;
+    } else {
+      soapBody = `
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://project3.demo/schema">
          <soapenv:Header/>
          <soapenv:Body>
@@ -155,18 +220,18 @@ const ResRecForm = () => {
                <hasRestaurantTypeInterest>${
                  values.hasRestaurantTypeInterest
                }</hasRestaurantTypeInterest>
-               <hasFoodTypeInterests>
-                  ${values.hasFoodTypeInterests
-                    .map(
-                      (food) =>
-                        `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`
-                    )
-                    .join("")}
+               <hasFoodTypeInterests>${values.hasFoodTypeInterests
+                 .map(
+                   (food) =>
+                     `<hasFoodTypeInterest>${food}</hasFoodTypeInterest>`
+                 )
+                 .join("")}
                </hasFoodTypeInterests>
             </sch:getRestaurantRecommendationRequest>
          </soapenv:Body>
       </soapenv:Envelope>
     `;
+    }
     try {
       const response = await axios.post("http://localhost:8080/ws", soapBody, {
         headers: {
@@ -490,8 +555,22 @@ const ResRecForm = () => {
             )}
           />
         </div>
-
-        <Button type="submit">Submit</Button>
+        <div className="flex items-center">
+          <Button type="submit">Submit</Button>
+          {signIn && (
+            <div className="ml-2">
+              <Toggle
+                variant="outline"
+                size="lg"
+                pressed={toggleState}
+                onPressedChange={setToggleState}
+                className="data-[state=on]:bg-green-3 data-[state=on]:text-white"
+              >
+                <FileUser /> <div>Use Profile Info</div>
+              </Toggle>
+            </div>
+          )}
+        </div>
       </form>
     </Form>
   );
