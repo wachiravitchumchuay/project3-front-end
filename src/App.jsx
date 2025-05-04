@@ -24,9 +24,10 @@ import { toast } from "sonner";
 //TODO: change website to running
 function App() {
   const [activeTab, setActiveTab] = useState("/HomePage");
-  const [login, setLogin] = useState(false);
+  const [signIn, setSignIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [signInDialogOpen, setSignInDialogOpen] = useState(false);
+  const [signUpDialogOpen, setSignUpDialogOpen] = useState(false);
 
   return (
     <AppProvider>
@@ -40,17 +41,20 @@ function App() {
                 setActiveTab={setActiveTab}
               />
               <div className="flex mr-24">
+                {/* //TODO: move signIn , username state to context
+                //TODO: save data to context
+                //TODO: sing out clear context */}
                 <Dialog
-                  open={loginDialogOpen}
-                  onOpenChange={setLoginDialogOpen}
+                  open={signInDialogOpen}
+                  onOpenChange={setSignInDialogOpen}
                 >
-                  {login && (
+                  {signIn && (
                     <div className="flex items-center">
                       <div className="text-xl">{username}</div>
                     </div>
                   )}
                   <DialogTrigger asChild>
-                    {!login && (
+                    {!signIn && (
                       <Button
                         variant="ghost"
                         size="lg"
@@ -60,13 +64,13 @@ function App() {
                       </Button>
                     )}
                   </DialogTrigger>
-                  {login && (
+                  {signIn && (
                     <Button
                       variant="ghost"
                       size="lg"
                       className="text-lg hover:bg-green-3 hover:text-white"
                       onClick={() => {
-                        setLogin(false);
+                        setSignIn(false);
                         toast.success("Sign Out Successful");
                       }}
                     >
@@ -77,15 +81,15 @@ function App() {
                   <DialogContent className="min-w-lg">
                     <DialogHeader>
                       <DialogTitle className="text-2xl font-bold">
-                        Login to your account
+                        Sign in to your account
                       </DialogTitle>
                       <DialogDescription />
                     </DialogHeader>
                     <div className="flex flex-1 items-center justify-center">
                       <SignInForm
                         onSuccess={(usr) => {
-                          setLogin(true),
-                            setLoginDialogOpen(false),
+                          signIn(true),
+                            setSignInDialogOpen(false),
                             setUsername(usr);
                         }}
                       />
@@ -93,7 +97,10 @@ function App() {
                   </DialogContent>
                 </Dialog>
 
-                <Dialog>
+                <Dialog
+                  open={signUpDialogOpen}
+                  onOpenChange={setSignUpDialogOpen}
+                >
                   <DialogTrigger asChild>
                     <Button
                       variant="outline"
@@ -103,25 +110,22 @@ function App() {
                       Sign up
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-md">
+                  <DialogContent className="min-w-7xl h-fit">
                     <DialogHeader>
-                      <DialogTitle>Share link</DialogTitle>
-                      <DialogDescription>
-                        Anyone who has this link will be able to view this.
-                      </DialogDescription>
+                      <DialogTitle className="text-2xl font-bold">
+                        Create New Account
+                      </DialogTitle>
+                      <DialogDescription />
                     </DialogHeader>
                     <div className="flex items-center space-x-2">
                       <div className="grid flex-1 gap-2">
-                        <SignUpForm />
+                        <SignUpForm
+                          onSuccess={() => {
+                            setSignUpDialogOpen(false);
+                          }}
+                        />
                       </div>
                     </div>
-                    <DialogFooter className="sm:justify-start">
-                      <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                          Close
-                        </Button>
-                      </DialogClose>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>
