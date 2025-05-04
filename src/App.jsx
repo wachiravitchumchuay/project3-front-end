@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AppProvider } from "./context/AppContext";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,17 +19,16 @@ import CarouselPage from "./pages/CarouselPage";
 import FormHomePage from "./pages/FormHomePage";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
-
+import { useAppContext } from "@/context/AppContext";
 //TODO: change website to running
 function App() {
   const [activeTab, setActiveTab] = useState("/HomePage");
-  const [signIn, setSignIn] = useState(false);
-  const [username, setUsername] = useState("");
+
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
   const [signUpDialogOpen, setSignUpDialogOpen] = useState(false);
-
+  const { signIn, setSignIn, userData, setUserData } = useAppContext();
   return (
-    <AppProvider>
+    <div>
       <Toaster richColors position="top-center" />
       <div className="font-body ">
         <div className="bg-green-2 text-white min-h-[50vh] ">
@@ -41,16 +39,14 @@ function App() {
                 setActiveTab={setActiveTab}
               />
               <div className="flex mr-24">
-                {/* //TODO: move signIn , username state to context
-                //TODO: save data to context
-                //TODO: sing out clear context */}
+  
                 <Dialog
                   open={signInDialogOpen}
                   onOpenChange={setSignInDialogOpen}
                 >
                   {signIn && (
                     <div className="flex items-center">
-                      <div className="text-xl">{username}</div>
+                      <div className="text-xl">{userData.username}</div>
                     </div>
                   )}
                   <DialogTrigger asChild>
@@ -71,6 +67,7 @@ function App() {
                       className="text-lg hover:bg-green-3 hover:text-white"
                       onClick={() => {
                         setSignIn(false);
+                        setUserData({});
                         toast.success("Sign Out Successful");
                       }}
                     >
@@ -87,10 +84,8 @@ function App() {
                     </DialogHeader>
                     <div className="flex flex-1 items-center justify-center">
                       <SignInForm
-                        onSuccess={(usr) => {
-                          signIn(true),
-                            setSignInDialogOpen(false),
-                            setUsername(usr);
+                        onSuccess={() => {
+                          setSignIn(true), setSignInDialogOpen(false);
                         }}
                       />
                     </div>
@@ -141,7 +136,7 @@ function App() {
           <FormHomePage />
         </div>
       </div>
-    </AppProvider>
+    </div>
   );
 }
 

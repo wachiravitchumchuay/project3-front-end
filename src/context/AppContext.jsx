@@ -9,6 +9,8 @@ export const AppProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
   const [runningEvents, setRunningEvents] = useState([]);
   const [travelPlaces, setTravelPlaces] = useState([]);
+  const [userData, setUserData] = useState({});
+  const [signIn, setSignIn] = useState(false);
 
   return (
     <AppContext.Provider value={{ 
@@ -17,7 +19,9 @@ export const AppProvider = ({ children }) => {
     service, setService, 
     restaurants, setRestaurants, 
     runningEvents, setRunningEvents,
-    travelPlaces, setTravelPlaces
+    travelPlaces, setTravelPlaces,
+    signIn, setSignIn,
+    userData, setUserData
     }}>
       {children}
     </AppContext.Provider>

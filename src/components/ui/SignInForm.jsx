@@ -13,8 +13,10 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useAppContext } from "@/context/AppContext";
 
 const SignInForm = ({ onSuccess }) => {
+  const { setUserData } = useAppContext();
   const formSchema = z.object({
     username: z.string().nonempty({ message: "username is required." }),
     password: z.string().nonempty({ message: "password is required." }),
@@ -48,16 +50,49 @@ const SignInForm = ({ onSuccess }) => {
         },
       });
 
-      const parser = new XMLParser({ ignoreAttributes: false, ignoreDeclaration: true });
+      const parser = new XMLParser({
+        ignoreAttributes: false,
+        ignoreDeclaration: true,
+      });
       const parsedData = parser.parse(response.data);
 
-      const res = parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"]["ns3:getUserProfileResponse"];
+      const res =
+        parsedData["SOAP-ENV:Envelope"]["SOAP-ENV:Body"][
+          "ns3:getUserProfileResponse"
+        ];
       const status = parseInt(res["status"]);
       const message = res["message"];
+      
 
       if (status === 0) {
+        const newData = {
+            username: res["username"],
+            district: res["district"],
+            raceType: res["raceType"],
+            typeofEvent: res["typeofEvent"],
+            travelPlaceType: res["travelPlaceType"],
+            price: res["price"],
+            organization: res["organization"],
+            activityArea: res["activityArea"],
+            standard: res["standard"],
+            level: res["level"],
+            startPeriod: res["startPeriod"],
+            reward: res["reward"],
+            PostRunCarbConsumtion: res["PostRunCarbConsumtion"],
+            PostRunFatConsumtion: res["PostRunFatConsumtion"],
+            PostRunProteinConsumtion: res["PostRunProteinConsumtion"],
+            PreRunCarbConsumtion: res["PreRunCarbConsumtion"],
+            PreRunFatConsumtion: res["PreRunFatConsumtion"],
+            PreRunProteinConsumtion: res["PreRunProteinConsumtion"],
+            hasRestaurantTypeInterest: res["hasRestaurantTypeInterest"],
+            RunnerType: res["RunnerType"],
+            BudgetInteresets: res["BudgetInteresets"]?.["BudgetInterest"] ?? [],
+            hasFoodTypeInterests: res["hasFoodTypeInterests"]?.["hasFoodTypeInterest"] ?? [],
+          };
+          console.log(newData)
+          setUserData(newData);
         toast.success("Sign In Successful");
-        onSuccess(values.username);
+        onSuccess();
       } else {
         toast.error(message || "Invalid username or password.");
         form.reset();
