@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -43,6 +43,13 @@ const TravelDisplayPage = () => {
   }, [carouselApi]);
 
   const { travelPlaces } = useAppContext();
+
+    const imagePaths = useMemo(() => {
+      return travelPlaces.map((event) => ({
+        ...event,
+        imagePath: getRandomImagePath(event.district),
+      }));
+    }, [travelPlaces]);
   return (
     <section className="py-16">
       <div className="">
@@ -90,16 +97,14 @@ const TravelDisplayPage = () => {
         >
           {/* <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))] 2xl:ml-[max(8rem,calc(50vw-700px+1rem))]"> */}
           <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))]">
-            {travelPlaces.map((place, index) => {
-              const imagePath = getRandomImagePath(place.district);
-              return (
+            {imagePaths.map((place, index) => (
                 <CarouselItem key={index} className="pl-4 md:max-w-[452px]">
                   <div>
                     <div className="flex aspect-[3/2] overflow-clip rounded-xl">
                       <div className="flex-1">
                         <div className="relative h-full w-full origin-bottom transition duration-300 group-hover:scale-105">
                           <img
-                            src={imagePath}
+                            src={place.imagePath}
                             alt={place.travelPlaceName}
                             className="h-full w-full object-cover object-center"
                           />
@@ -132,8 +137,7 @@ const TravelDisplayPage = () => {
                     </div>
                   </div>
                 </CarouselItem>
-              );
-            })}
+            ))}
           </CarouselContent>
         </Carousel>
       </div>

@@ -1,6 +1,6 @@
 import { useAppContext } from "@/context/AppContext";
 import { ArrowLeft, ArrowRight, Flame } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -37,10 +37,18 @@ const RunningCard = () => {
       return `/runningEvents/${type}/${type}${randomIndex}_result.webp`;
     }
 
-    return "/travelPlaces/Kathu District/Kathu District1_result.webp"; //default
+    return "/runningEvents/Kathu District/Kathu District1_result.webp";
   };
 
+
+
   const { runningEvents } = useAppContext();
+  const imagePaths = useMemo(() => {
+    return runningEvents.map((event) => ({
+      ...event,
+      imagePath: getRandomImagePath(event.district),
+    }));
+  }, [runningEvents]);
   return (
     <section className="py-2">
       <div className="">
@@ -85,16 +93,14 @@ const RunningCard = () => {
           className="relative left-[-1rem]"
         >
           <CarouselContent className="-mr-4 ml-8 2xl:mr-[max(0rem,calc(50vw-700px-1rem))]">
-            {runningEvents.map((event, index) => {
-              const imagePath = getRandomImagePath(event.district);
-              return (
+            {imagePaths.map((event, index) => (
                 <CarouselItem key={index} className="pl-4 md:max-w-[452px]">
                   <div>
                     <div className="flex aspect-[3/2] overflow-clip rounded-xl">
                       <div className="flex-1">
                         <div className="relative h-full w-full origin-bottom transition duration-300 group-hover:scale-105">
                           <img
-                            src={imagePath}
+                            src={event.imagePath}
                             alt={event.runningEventName}
                             className="h-full w-full object-cover object-center"
                           />
@@ -127,8 +133,7 @@ const RunningCard = () => {
                     </div>
                   </div>
                 </CarouselItem>
-              );
-            })}
+            ))}
           </CarouselContent>
         </Carousel>
       </div>
