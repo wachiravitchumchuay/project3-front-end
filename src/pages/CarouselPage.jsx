@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-//TODO: change to running picture
+
 const CarouselPage = () => {
   return (
     <motion.div
@@ -41,7 +41,7 @@ const CarouselPage = () => {
                       <Card className="py-2">
                         <CardContent className="px-2 h-[500px]">
                           <img
-                            src={`/carousel/restaurant${index + 1}_result.webp`}
+                            src={`/carousel/runningEvent${index + 1}_result.webp`}
                             alt={`Image ${index + 1}`}
                             className="w-full h-full object-cover rounded-2xl"
                           />
@@ -59,7 +59,7 @@ const CarouselPage = () => {
             <div className="font-head text-6xl">Explore </div>
             <div className="mt-6">
               The best of Phuket with personalized restaurant picks, matching
-              travel spots, and running events — designed around your choices
+              travel places, and running events — designed around your choices
               and lifestyle.
             </div>
           </div>

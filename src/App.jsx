@@ -20,7 +20,6 @@ import FormHomePage from "./pages/FormHomePage";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
 import { useAppContext } from "@/context/AppContext";
-//TODO: change website to running
 function App() {
   const [activeTab, setActiveTab] = useState("/HomePage");
 
